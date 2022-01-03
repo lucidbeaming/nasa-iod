@@ -1,11 +1,11 @@
 import { useState, useLayoutEffect } from "react";
 
 function Header(props) {
-    const [ collapsed, setCollapsed ] = useState(" collapsed")
-    const [ favoriteCount, setFavoriteCount ] = useState(" collapsed")
+    const [collapsed, setCollapsed] = useState(" collapsed")
+    const [favoriteCount, setFavoriteCount] = useState(" collapsed")
     const toggleAbout = () => {
         if (collapsed !== " collapsed") {
-            setCollapsed(" collapsed") 
+            setCollapsed(" collapsed")
         } else {
             setCollapsed("")
         }
@@ -21,10 +21,10 @@ function Header(props) {
         }
     }
     const showFavs = () => {
-    	let favArr = JSON.parse(localStorage.getItem("nasaPics"))
-    	if (favArr !== null) {
-    		favArr.forEach((item) => { console.log(item) })
-    	}
+        let favArr = JSON.parse(localStorage.getItem("nasaPics"))
+        if (favArr !== null) {
+            favArr.forEach((item) => { console.log(item) })
+        }
     }
     useLayoutEffect(() => {
         checkFav()

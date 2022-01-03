@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import Imageblock from "./image-block.js"
+import Imageblock from "./ImageBlock.js"
 
 const apiKey = process.env.REACT_APP_NASA_API_KEY
 

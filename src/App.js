@@ -1,7 +1,7 @@
 import { useState, useLayoutEffect } from "react";
 import './App.css'
-import Header from './header.js';
-import Main from './main.js';
+import Header from './Header.js';
+import Main from './Main.js';
 
 function App() {
     const [triggered, setTriggered] = useState(false)

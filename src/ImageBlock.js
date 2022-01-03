@@ -1,4 +1,4 @@
-import Image from "./image.js"
+import Image from "./Image.js"
 
 function Imageblock(props) {
     return (

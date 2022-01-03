@@ -5,20 +5,20 @@ function Image(props) {
         const picDate = new Date(date)
         return picDate.toUTCString().split(" ")
     }
-    const [ , day, month, year ] = splitDate(props.imgData.date)
-    const [ collapsed, setCollapsed ] = useState(" collapsed")
-    const [ loading, setLoading ] = useState(" loading")
-    const [ savedFav, setSavedFav ] = useState("")
+    const [, day, month, year] = splitDate(props.imgData.date)
+    const [collapsed, setCollapsed] = useState(" collapsed")
+    const [loading, setLoading] = useState(" loading")
+    const [savedFav, setSavedFav] = useState("")
     const toggleAbout = () => {
         if (collapsed !== " collapsed") {
-            setCollapsed(" collapsed") 
+            setCollapsed(" collapsed")
         } else {
             setCollapsed("")
         }
     }
     const imageLoaded = () => {
         if (loading !== " loading") {
-            setLoading(" loading") 
+            setLoading(" loading")
         } else {
             setLoading("")
         }
@@ -35,7 +35,7 @@ function Image(props) {
                     setSavedFav("Already saved")
                 }
             } else {
-                favArr = [ date ]
+                favArr = [date]
                 props.setNewFav(favArr.length)
                 setSavedFav("Your first favorite!")
             }

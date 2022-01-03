@@ -5,23 +5,23 @@ import Main from './main.js';
 
 function App() {
     const [triggered, setTriggered] = useState(false)
-    const [winHeight, setWinHeight]  = useState(window.innerHeight)
+    const [winHeight, setWinHeight] = useState(window.innerHeight)
     const [newFav, setNewFav] = useState(0)
     useLayoutEffect(() => {
         const checkHeight = () => {
             setWinHeight(window.innerHeight)
         }
-        const isScrolling = () => { 
+        const isScrolling = () => {
             const bottomPosition = document.getElementById('iod').getBoundingClientRect().bottom - winHeight
             if (bottomPosition < (winHeight * 2)) {
-                    setTriggered(true)
+                setTriggered(true)
             } else {
-                    setTriggered(false)
+                setTriggered(false)
             }
         }
         window.addEventListener("scroll", isScrolling)
         window.addEventListener('resize', checkHeight)
-        return () => { 
+        return () => {
             window.removeEventListener("scroll", isScrolling)
             window.removeEventListener('resize', checkHeight)
             setTriggered(false)

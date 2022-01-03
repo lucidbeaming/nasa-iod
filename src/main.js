@@ -40,22 +40,22 @@ const dateRange = (imageCount) => {
 function Main(props) {
     const initializing = useRef(true)
     const [allImages, setAllImages] = useState([])
-    let [from,to] = dateRange(allImages.length)
+    let [from, to] = dateRange(allImages.length)
     let criteria = { start: from, end: to }
     const [imageUpdate, loading, callNASA] = useNasaImages(criteria)
     useLayoutEffect(() => {
-            if (initializing.current && !allImages.length) {
-                initializing.current = false
-                callNASA(criteria)
-            }
-            if ( !initializing.current && !allImages.length && !loading) {
-                setAllImages(imageUpdate)
-            } else if (!initializing.current && allImages.length && !loading) {
-                setAllImages(allImages.concat(imageUpdate))
-            }
-    },[loading])  
+        if (initializing.current && !allImages.length) {
+            initializing.current = false
+            callNASA(criteria)
+        }
+        if (!initializing.current && !allImages.length && !loading) {
+            setAllImages(imageUpdate)
+        } else if (!initializing.current && allImages.length && !loading) {
+            setAllImages(allImages.concat(imageUpdate))
+        }
+    }, [loading])
     useLayoutEffect(() => {
-        if (props.triggered && allImages.length){ 
+        if (props.triggered && allImages.length) {
             callNASA(criteria)
         }
     }, [props.triggered])

@@ -10,7 +10,7 @@ function Imageblock(props) {
                                 <Image imgData={image_item} key={index} setNewFav={props.setNewFav}/>
                             )
                         } else {
-                            return( null )
+                            return(null)
                         }
                 })
             }

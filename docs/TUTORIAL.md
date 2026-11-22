@@ -133,6 +133,21 @@ Try it: open the Network panel and scroll past a video day. No request goes to Y
 
 Try it: open the app in two tabs and favorite a picture in one. The count updates in both.
 
+## Chapter 09: Routing
+
+| File                                               | Concepts                                                                                                        |
+| -------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `src/main.tsx`                                     | 📘 client-side routing; `basename`; deep links on static hosting (hash routing vs a `404.html` fallback)        |
+| `src/App.tsx`                                      | layout routes and `<Outlet>`                                                                                    |
+| `src/pages/FeedPage.tsx`                           | 📘 document metadata in React 19                                                                                |
+| `src/pages/DayPage.tsx`                            | `useParams`; URL parameters are input, so validate them; `useSuspenseQuery`; per-page `<title>` and description |
+| `src/pages/FavoritesPage.tsx`                      | rendering from the store; one boundary per pending favorite; an effect that writes to the store                 |
+| `src/pages/NotFoundPage.tsx`                       | catch-all routes; `noindex`                                                                                     |
+| `index.html`                                       | why there's no static description                                                                               |
+| `src/Header.tsx`, `src/components/Entry/Entry.tsx` | `<Link>` vs a button that navigates                                                                             |
+
+Try it: open `/day/1995-06-16`, the first APOD ever.
+
 ## Target structure
 
 ```

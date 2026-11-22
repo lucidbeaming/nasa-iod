@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "typescript", "oxc"],
+  "jsPlugins": [{ "name": "react-compiler", "specifier": "eslint-plugin-react-hooks" }],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/exhaustive-deps": "warn",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }],
+    "react-compiler/static-components": "error",
+    "react-compiler/use-memo": "error",
+    "react-compiler/preserve-manual-memoization": "error",
+    "react-compiler/incompatible-library": "warn",
+    "react-compiler/immutability": "error",
+    "react-compiler/globals": "error",
+    "react-compiler/refs": "error",
+    "react-compiler/set-state-in-effect": "warn",
+    "react-compiler/set-state-in-render": "error",
+    "react-compiler/error-boundaries": "error",
+    "react-compiler/purity": "error",
+    "react-compiler/unsupported-syntax": "warn",
+    "react-compiler/config": "error",
+    "react-compiler/gating": "error"
+  },
+  "ignorePatterns": ["dist"]
+}

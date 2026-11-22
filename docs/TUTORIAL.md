@@ -108,6 +108,20 @@ Try it: open the dev tools' Performance panel and scroll. Before this chapter, e
 
 Try it: in the dev tools' Network panel, set throttling to "Offline" and reload. The feed shows "You seem to be offline", and the header still works. Go back online and press "Try again".
 
+## Chapter 07: Every media type
+
+| File                                  | Concepts                                                                                                                                        |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/components/Entry/Entry.tsx`      | composition: one frame, three media parts; 📘 exhaustiveness checking with `never`; `<article>`                                                 |
+| `src/components/Entry/ImageEntry.tsx` | ⚠️ toggled vs one-way state; `srcset`/`sizes`; lazy loading and `fetchPriority`; reserving space with `width`/`height`; a load-failure fallback |
+| `src/components/Entry/VideoEntry.tsx` | click-to-load embeds; `youtube-nocookie.com`; iframe titles                                                                                     |
+| `src/components/Entry/LinkEntry.tsx`  | graceful degradation                                                                                                                            |
+| `src/components/Entry/RichText.tsx`   | rendering the parsed HTML tree recursively; when an index key is correct                                                                        |
+| `src/components/Entry/DateStamp.tsx`  | derived values; `<time>`; time zones in `Intl.DateTimeFormat`                                                                                   |
+| `src/components/Feed/Feed.tsx`        | ⚠️ index keys; keying by date                                                                                                                   |
+
+Try it: open the Network panel and scroll past a video day. No request goes to YouTube until you press Play.
+
 ## Target structure
 
 ```

@@ -87,6 +87,16 @@ Compare `Feed.tsx` with the deleted `Main.tsx` (`git diff chapter-03 chapter-04 
 
 The ⚠️ in `Feed.tsx` is a real mistake made while writing this chapter. A test of a failed page caught it: the first version re-requested a failed page in a tight loop.
 
+## Chapter 05: Infinite scroll with IntersectionObserver
+
+| File                           | Concepts                                                                                                                                                                |
+| ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/hooks/useInView.ts`       | ⚠️ the 2021 scroll listener and its stale closure; IntersectionObserver; 📘 callback refs with cleanup (React 19); why the compiler may make code faster, never correct |
+| `src/components/Feed/Feed.tsx` | a sentinel element; the "load more" effect, now driven by the observer                                                                                                  |
+| `src/App.tsx`                  | what's left once scrolling moved out: layout and shared state                                                                                                           |
+
+Try it: open the dev tools' Performance panel and scroll. Before this chapter, every scroll event ran a handler and measured the layout. Now nothing runs until the sentinel crosses its margin.
+
 ## Target structure
 
 ```

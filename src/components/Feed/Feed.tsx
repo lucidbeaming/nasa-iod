@@ -2,11 +2,12 @@
  * src/components/Feed/Feed.tsx
  *
  * WHAT: The feed. Reads the archive from TanStack Query, page by page, and
- *       asks for the next page when App reports the user is near the bottom.
+ *       asks for the next page when a sentinel after the last entry comes
+ *       near the viewport.
  * WHERE: Rendered by App.tsx inside a <Suspense> boundary. Renders
  *        <Imageblock> with the de-duplicated list.
  * CONCEPTS: useSuspenseInfiniteQuery, Suspense (first look), effects that
- *           synchronize with props
+ *           synchronize with external state, sentinels
  * READ MORE:
  *   - https://tanstack.com/query/latest/docs/framework/react/reference/useSuspenseInfiniteQuery
  *   - https://react.dev/reference/react/Suspense
@@ -19,18 +20,17 @@ import { useSuspenseInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { ARCHIVE_START } from '../../lib/dates.ts'
 import { feedQuery } from '../../api/queries.ts'
+import { useInView } from '../../hooks/useInView.ts'
 import Imageblock from '../../ImageBlock.tsx'
 
 /** Props for {@link Feed}. */
 interface FeedProps {
-  /** True while the bottom of the page is near the viewport (chapter 05 replaces this). */
-  triggered: boolean
   /** Reports the new favorites count up to App. */
   setNewFav: (count: number) => void
 }
 
 /** The infinite feed of APOD entries, newest first. */
-function Feed({ triggered, setNewFav }: FeedProps) {
+function Feed({ setNewFav }: FeedProps) {
   // 📘 Concept: Suspense (first look; chapter 06 covers it fully)
   // The "suspense" version of the hook never returns while the first page is
   // loading. It suspends instead, and React shows the nearest <Suspense
@@ -49,15 +49,21 @@ function Feed({ triggered, setNewFav }: FeedProps) {
     error,
   } = useSuspenseInfiniteQuery(feedQuery)
 
+  // The sentinel is an empty element after the last entry. `nearBottom` is
+  // true while it's within two screen heights of the viewport (see
+  // useInView.ts for why this replaced App's scroll listener).
+  const [sentinelRef, nearBottom] = useInView('0px 0px 200% 0px')
+
   // Ask for the next page while the bottom is near, there is a next page,
   // and none is already on its way. This effect *synchronizes* the query with
-  // a prop, which is what effects are for. Every value it reads is in the
+  // what the observer reports, which is what effects are for. Every value it reads is in the
   // dependency array, so it re-checks whenever any of them changes: after a
   // page arrives (isFetchingNextPage flips back to false), it loads another
   // if the user is still near the bottom.
   //
   // ⚠️ Common mistake (from v0-2021, src/Main.js):
   //   useLayoutEffect(() => { if (props.triggered) callNASA(criteria) }, [props.triggered])
+  // (`triggered` was App's "near the bottom" flag, now `nearBottom`.)
   // With nothing checking whether a request was already running, a second
   // trigger could request the same range twice (#10). isFetchingNextPage is
   // that check, and TanStack Query also de-duplicates calls to fetchNextPage
@@ -71,10 +77,10 @@ function Feed({ triggered, setNewFav }: FeedProps) {
   // effect that starts work must also know when to *stop*. After a failed
   // page, nothing loads until the user asks (chapter 06 adds a Retry button).
   useEffect(() => {
-    if (triggered && hasNextPage && !isFetchingNextPage && !isFetchNextPageError) {
+    if (nearBottom && hasNextPage && !isFetchingNextPage && !isFetchNextPageError) {
       void fetchNextPage()
     }
-  }, [triggered, hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage])
+  }, [nearBottom, hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage])
 
   return (
     <div id="main">
@@ -87,7 +93,9 @@ function Feed({ triggered, setNewFav }: FeedProps) {
           Couldn’t load earlier pictures: {error?.message}
         </p>
       ) : hasNextPage ? (
-        <div className={`iod-loader${isFetchingNextPage ? ' active' : ''}`}></div>
+        // The loader doubles as the sentinel. It's only rendered while
+        // there's more to load, so the observer stops with it.
+        <div ref={sentinelRef} className={`iod-loader${isFetchingNextPage ? ' active' : ''}`}></div>
       ) : (
         <p className="iod-end">
           You’ve reached the first Astronomy Picture of the Day ({ARCHIVE_START}).

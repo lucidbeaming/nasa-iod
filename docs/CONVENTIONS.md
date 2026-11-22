@@ -32,7 +32,7 @@ Say **why this hook**, what each argument or option means, and **what would go w
 // useSyncExternalStore subscribes a component to a store React doesn't own
 // (here, localStorage). Plain useState + useEffect would show stale data for
 // one render and could "tear" (two components showing different values).
-const favorites = useSyncExternalStore(subscribe, getSnapshot);
+const favorites = useSyncExternalStore(subscribe, getSnapshot)
 ```
 
 ### 3. 📘 Concept blocks
@@ -59,7 +59,7 @@ The original 2021 version of this app (tag [`v0-2021`](https://github.com/lucidb
 
 Every exported function, hook, component and type gets a `/** … */` comment: what it does, its parameters, and what it returns or renders. Editors show these on hover, so they double as inline documentation.
 
-### 6. Explain *why*, not *what*
+### 6. Explain _why_, not _what_
 
 `// increment the counter` above `count++` teaches nothing. Explain the decision: why this approach, what the alternative was, and what breaks if you change it.
 

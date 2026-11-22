@@ -1,0 +1,8 @@
+// The root config only points at two projects, because the code runs in two
+// different places: the app runs in the browser (tsconfig.app.json) and
+// vite.config.ts runs in Node (tsconfig.node.json). Each gets the right
+// globals: DOM types for one, Node types for the other.
+{
+  "files": [],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+}

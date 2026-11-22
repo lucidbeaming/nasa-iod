@@ -18,4 +18,3 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 Get a free and instant API key from the [NASA website](https://api.nasa.gov/) and save it in an .env file in the root of the project. Note that isn't the src folder.
 
 `REACT_APP_NASA_API_KEY=XXXXXXXXXXXXXXXXXX`
-

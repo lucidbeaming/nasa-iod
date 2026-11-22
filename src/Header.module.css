@@ -57,7 +57,10 @@
    gives the pictures the whole screen. */
 @media (max-width: 768px) {
   .header {
-    position: static;
+    /* relative, not static: the "?" button is absolutely positioned, and
+       needs the header as its containing block, or it escapes to the
+       corner of the page. */
+    position: relative;
     width: auto;
     margin: 0;
     padding: var(--space-3) var(--space-3) var(--space-4);

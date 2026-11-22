@@ -21,8 +21,14 @@
  * cancellation, and loading/error status that's always consistent. The
  * components just ask for data.
  */
-import { QueryClient, infiniteQueryOptions, type InfiniteData } from '@tanstack/react-query'
-import { ApiError, fetchApodPage, type ApodEntry, type ApodPage } from './apod.ts'
+import {
+  QueryClient,
+  infiniteQueryOptions,
+  queryOptions,
+  type InfiniteData,
+} from '@tanstack/react-query'
+import type { IsoDate } from '../lib/dates.ts'
+import { ApiError, fetchApodDay, fetchApodPage, type ApodEntry, type ApodPage } from './apod.ts'
 
 /**
  * Query keys. A key identifies one cache entry: two components using the
@@ -33,6 +39,7 @@ import { ApiError, fetchApodPage, type ApodEntry, type ApodPage } from './apod.t
 export const apodKeys = {
   all: ['apod'] as const,
   feed: () => [...apodKeys.all, 'feed'] as const,
+  day: (date: IsoDate) => [...apodKeys.all, 'day', date] as const,
 }
 
 /**
@@ -70,6 +77,20 @@ export const feedQuery = infiniteQueryOptions({
   // what's stored. Here: flatten the pages into one list, de-duplicated.
   select: uniqueEntries,
 })
+
+/**
+ * One day's entry, for the day permalink page and for favorites saved by
+ * the 2021 version (which stored only the date).
+ *
+ * @param date - `YYYY-MM-DD`
+ */
+export const dayQuery = (date: IsoDate) =>
+  queryOptions({
+    queryKey: apodKeys.day(date),
+    queryFn: ({ signal }) => fetchApodDay(date, signal),
+    // A published APOD doesn't change, so once fetched it never goes stale.
+    staleTime: Infinity,
+  })
 
 /**
  * Flattens loaded pages into a single list with one entry per date.

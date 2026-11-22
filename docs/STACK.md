@@ -90,7 +90,15 @@ The devtools (`@tanstack/react-query-devtools`) are worth adding while developin
 
 ## Routing
 
-_Chapter 09: React Router._
+### React Router (`react-router`)
+
+**Why:** the app has three kinds of pages (the feed, favorites, a day's permalink), and each should have a real URL that can be bookmarked, shared and opened directly. Declarative mode (`<BrowserRouter>`, `<Routes>`, `<Route>`) is the smallest way to use it: routes as JSX, `useParams` for `:date`, `<Link>` for navigation, and a layout route with `<Outlet>` for the shared header.
+
+**Plain alternative:** read `location.pathname`, switch on it, and listen for `popstate`; intercept link clicks to call `history.pushState`. Workable for two routes, but you end up rewriting a router: nested layouts, parameters, relative links, base paths.
+
+**When you wouldn't need it:** a true single-view app. Or use React Router's _data_ or _framework_ modes when you want route-level data loading, which here is handled by TanStack Query instead.
+
+Version 8 requires Node 22.22+ to install (`engines.node`).
 
 ## Deployment
 

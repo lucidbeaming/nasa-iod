@@ -17,6 +17,7 @@
  * names (chapter 10).
  */
 import { useState } from 'react'
+import { Link } from 'react-router'
 import type { ApodEntry } from '../../api/apod.ts'
 import { useFavorites } from '../../hooks/useFavorites.ts'
 import { isFavorite, toggleFavorite } from '../../lib/favorites.ts'
@@ -92,7 +93,10 @@ export function Entry({ entry, priority = false }: EntryProps) {
       <div className="image-block-inner">
         <Media entry={entry} priority={priority} />
         <div className="title-bar">
-          <h3>{entry.title}</h3>
+          {/* The title links to the day's permalink (/day/:date). */}
+          <h3>
+            <Link to={`/day/${entry.date}`}>{entry.title}</Link>
+          </h3>
           <div className="toolbox">
             <span className="fav-message">{savedFav}</span>
             <button className={`fav-toggle${saved ? ' saved' : ''}`} onClick={onFavorite}>

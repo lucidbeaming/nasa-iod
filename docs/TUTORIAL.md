@@ -173,6 +173,21 @@ This chapter replaces the planned "bring your own API key" form: NASA's new APOD
 
 Try it: jump to 1995-06-18. That day has no APOD, and the form says so without leaving the page.
 
+## Chapter 12: CSS Modules and design tokens
+
+| File                                    | Concepts                                                              |
+| --------------------------------------- | --------------------------------------------------------------------- |
+| `src/styles/tokens.css`                 | 📘 design tokens; dark mode as a second set of values; `color-scheme` |
+| `src/styles/global.css`                 | 📘 CSS Modules; what stays global and why                             |
+| `src/styles/page.module.css`            | a module shared by several components                                 |
+| `src/components/Entry/Entry.module.css` | styling state from ARIA attributes (`[aria-pressed='true']`)          |
+| `src/Header.module.css`                 | the narrow-screen header, no longer fixed over the feed               |
+| any `*.tsx`                             | `import styles from './X.module.css'` and `className={styles.name}`   |
+
+The 400-line global `App.css` is gone. Each component's styles sit next to it, and deleting a component deletes its CSS.
+
+Try it: switch your system to dark mode. Every color changes, but no component has a dark variant; only the token values change.
+
 ## Target structure
 
 ```

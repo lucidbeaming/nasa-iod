@@ -16,6 +16,7 @@ import { dayQuery } from '../api/queries.ts'
 import { Entry } from '../components/Entry/Entry.tsx'
 import { FeedBoundary } from '../components/Feed/FeedBoundary.tsx'
 import { isArchiveDate } from '../lib/dates.ts'
+import page from '../styles/page.module.css'
 import { NotFoundPage } from './NotFoundPage.tsx'
 
 /** Loads and shows one day's entry. Suspends while loading. */
@@ -45,7 +46,7 @@ export function DayPage() {
     return <NotFoundPage message={`“${date}” isn’t a date in the APOD archive.`} />
   }
   return (
-    <div id="main">
+    <div className={page.page}>
       {/* See the heading note in FeedPage.tsx. */}
       <h2 className="visually-hidden">Picture for {date}</h2>
       {/* The same boundaries as the feed: a skeleton while loading, and a

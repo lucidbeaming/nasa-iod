@@ -15,6 +15,7 @@ import { Entry } from '../components/Entry/Entry.tsx'
 import { FeedBoundary } from '../components/Feed/FeedBoundary.tsx'
 import { useFavorites } from '../hooks/useFavorites.ts'
 import { resolveFavorite } from '../lib/favorites.ts'
+import page from '../styles/page.module.css'
 
 /**
  * A favorite saved by the 2021 version, which stored only its date: fetch
@@ -37,17 +38,17 @@ function PendingFavorite({ date }: { date: string }) {
 export function FavoritesPage() {
   const favorites = useFavorites()
   return (
-    <div id="main">
+    <div className={page.page}>
       <title>{`Favorites (${favorites.length}) · NASA Image of the Day`}</title>
       <meta name="robots" content="noindex" />
-      <h2 className="page-title">Favorites</h2>
+      <h2 className={page.title}>Favorites</h2>
       {favorites.length === 0 ? (
-        <p className="iod-end">
+        <p className={page.notice}>
           No favorites yet. Press <strong>*</strong> on any picture to save it here.{' '}
           <Link to="/">Back to the feed</Link>
         </p>
       ) : (
-        <div id="main-block">
+        <div>
           {favorites.map(({ date, entry }) =>
             entry ? (
               <Entry key={date} entry={entry} />

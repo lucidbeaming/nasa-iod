@@ -30,6 +30,7 @@ import { useNavigate } from 'react-router'
 import { ApiError } from '../../api/apod.ts'
 import { dayQuery } from '../../api/queries.ts'
 import { ARCHIVE_START, isArchiveDate, todayInArchive } from '../../lib/dates.ts'
+import styles from './JumpToDate.module.css'
 
 /** What the action returns: the last date tried, and an error if it failed. */
 interface JumpState {
@@ -106,7 +107,7 @@ export function JumpToDate() {
     // `action={formAction}` instead of onSubmit: no preventDefault, no
     // reading values from state. After a successful action, React resets
     // the form's uncontrolled inputs, like a browser would after a submit.
-    <form className="jump-to-date" action={formAction}>
+    <form className={styles.form} action={formAction}>
       <label htmlFor={`${id}-date`}>Jump to a date</label>
       <input
         id={`${id}-date`}
@@ -125,7 +126,7 @@ export function JumpToDate() {
       {/* role="alert" announces a new error immediately; aria-describedby on
           the input also reads it when the reader returns to the field. */}
       {state.error && (
-        <p id={errorId} className="jump-error" role="alert">
+        <p id={errorId} className={styles.error} role="alert">
           {state.error}
         </p>
       )}

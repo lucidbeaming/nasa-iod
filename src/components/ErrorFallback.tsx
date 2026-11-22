@@ -12,6 +12,7 @@
  */
 import type { FallbackProps } from 'react-error-boundary'
 import { ApiError } from '../api/apod.ts'
+import styles from './ErrorFallback.module.css'
 
 /**
  * Turns whatever was thrown into a sentence a reader can act on.
@@ -60,7 +61,7 @@ export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   return (
     // role="alert" makes screen readers announce the message as soon as it
     // appears, since it replaces content the reader was waiting for.
-    <div className="iod-error" role="alert">
+    <div className={styles.error} role="alert">
       <h2>{title}</h2>
       <p>{detail}</p>
       {retryable && (

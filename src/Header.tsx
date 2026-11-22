@@ -16,6 +16,7 @@ import { useId, useState } from 'react'
 import { Link } from 'react-router'
 import { JumpToDate } from './components/JumpToDate/JumpToDate.tsx'
 import { useFavorites } from './hooks/useFavorites.ts'
+import styles from './Header.module.css'
 
 /** Page header with the favorites count and the about panel. */
 function Header() {
@@ -40,11 +41,11 @@ function Header() {
       : `${favorites.length} favorite${favorites.length > 1 ? 's' : ''} saved`
 
   return (
-    <header className="iod-header">
-      <h1>
+    <header className={styles.header}>
+      <h1 className={styles.title}>
         <Link to="/">NASA Image of the Day</Link>
       </h1>
-      <p>
+      <p className={styles.count}>
         {favoriteCount}{' '}
         {/* <Link> renders a real <a href>, so it works with the keyboard,
             middle-click and "open in new tab", but navigates without a page
@@ -60,7 +61,7 @@ function Header() {
       <JumpToDate />
       <button
         type="button"
-        className="iod-link"
+        className={styles.aboutToggle}
         aria-expanded={aboutOpen}
         aria-controls={aboutId}
         onClick={() => setAboutOpen(!aboutOpen)}
@@ -68,7 +69,7 @@ function Header() {
         <span aria-hidden="true">?</span>
         <span className="visually-hidden">About this app</span>
       </button>
-      <div className="app-info" id={aboutId} hidden={!aboutOpen}>
+      <div className={styles.about} id={aboutId} hidden={!aboutOpen}>
         <p>
           This is a demonstration of inifinite scrolling in a React app. The official NASA image of
           the day site is{' '}

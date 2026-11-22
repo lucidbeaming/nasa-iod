@@ -1,0 +1,40 @@
+/*
+ * src/styles/page.module.css
+ *
+ * WHAT: The content column every page shares: the feed, a day, favorites,
+ *       not found. Also the page heading and the centered notice text.
+ * WHERE: Imported by Feed.tsx and the files in pages/.
+ *
+ * A CSS Module can be imported by several components. This is the one
+ * shared module; component-specific styles stay with their component.
+ */
+
+/* Centered column, as in 2021 (#main). */
+.page {
+  max-width: var(--content-width);
+  margin: var(--space-4) auto;
+}
+
+/* Visible page heading (favorites); lines up with the entries' content. */
+.title {
+  margin: 0 0 var(--space-4) 10vw;
+}
+
+/* Centered notice: end of the archive, empty favorites, not found. */
+.notice {
+  margin: var(--space-5) auto 30vh;
+  max-width: 36rem;
+  padding: 0 var(--space-3);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 768px) {
+  .page {
+    margin-top: var(--space-3);
+  }
+
+  .title {
+    margin-left: var(--space-3);
+  }
+}

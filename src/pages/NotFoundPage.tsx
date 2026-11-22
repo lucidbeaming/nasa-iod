@@ -6,11 +6,12 @@
  * CONCEPTS: catch-all routes, client-side links
  */
 import { Link } from 'react-router'
+import page from '../styles/page.module.css'
 
 /** "Page not found", with a way back. */
 export function NotFoundPage({ message = 'There’s no page at this address.' }) {
   return (
-    <div id="main" className="iod-error">
+    <div className={`${page.page} ${page.notice}`}>
       <title>Not found · NASA Image of the Day</title>
       {/* A static host can't send a 404 status for a single-page app's
           routes, so this tells search engines not to index the page. */}

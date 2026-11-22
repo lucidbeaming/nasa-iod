@@ -1,0 +1,54 @@
+/*
+ * src/components/Entry/Media.module.css: the media part of an entry
+ * (ImageEntry, VideoEntry, LinkEntry).
+ */
+.imageLink {
+  display: block;
+  align-self: center;
+}
+
+/* Until the image loads, its link reserves space (the image's own width
+   and height attributes do the rest) and shows a neutral block. */
+.loading {
+  min-height: 12rem;
+  background: var(--color-skeleton);
+}
+
+.image {
+  display: block;
+  height: auto;
+}
+
+/* Fallback text when there's no picture to show. */
+.notice {
+  padding: var(--space-5) var(--space-3);
+  text-align: center;
+  background: var(--color-surface-strong);
+}
+
+/* The click-to-load video "facade". */
+.facade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: var(--radius-small);
+  background: var(--color-media-bg);
+  color: #ffffff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.play {
+  font-size: 3em;
+}
+
+.frame {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}

@@ -1,0 +1,29 @@
+/*
+ * src/components/Feed/FeedSkeleton.module.css: placeholder blocks shaped
+ * like entries. The entry layout itself comes from Entry.module.css.
+ */
+.image {
+  aspect-ratio: 4 / 3;
+  background: var(--color-skeleton);
+}
+
+.title {
+  width: 60%;
+  height: 1.5rem;
+  margin-top: var(--space-3);
+  background: var(--color-skeleton);
+}
+
+/* The pulse is decoration, so it only runs when motion is welcome. */
+@media (prefers-reduced-motion: no-preference) {
+  .image,
+  .title {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.5;
+  }
+}

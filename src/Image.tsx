@@ -7,15 +7,16 @@
  * CONCEPTS: local UI state, event handlers, writing to localStorage
  * READ MORE: https://react.dev/learn/responding-to-events
  *
- * Ported from 2021 without behavior changes. Chapter 07 rewrites it as
- * ImageEntry; chapter 08 moves favorites into a shared store.
+ * Ported from 2021. Chapter 03 switched it to the new API's fields (a resized
+ * image, the full-size link, a plain-text explanation). Chapter 07 rewrites
+ * it as ImageEntry; chapter 08 moves favorites into a shared store.
  */
 import { useState } from 'react'
-import type { ApodItem } from './types.ts'
+import { plainExplanation, type ImageEntry } from './api/apod.ts'
 
 /** Props for {@link Image}. */
 interface ImageProps {
-  imgData: ApodItem
+  imgData: ImageEntry
   /** Reports the new favorites count up to App. */
   setNewFav: (count: number) => void
 }
@@ -76,11 +77,13 @@ function Image(props: ImageProps) {
     <div className="image-block">
       <div className="image-block-left">&nbsp;</div>
       <div className="image-block-inner">
-        <a href={props.imgData.url} className={`img-anchor${loading}`}>
+        <a href={props.imgData.hdurl} className={`img-anchor${loading}`}>
           {/* Known bug (#12): every image gets the same alt text, so a screen
               reader user hears the same sentence for every picture. */}
           <img
-            src={props.imgData.url}
+            // The full-size image can be several megabytes; the image service
+            // resizes on request. Chapter 07 adds a srcset for other widths.
+            src={`${props.imgData.imageBase}?w=1200`}
             alt="astronomical depiction of outer space"
             title={props.imgData.title}
             onLoad={imageLoaded}
@@ -101,7 +104,8 @@ function Image(props: ImageProps) {
             </button>
           </div>
           <div className={`caption-box${collapsed}`}>
-            <p>{props.imgData.explanation}</p>
+            {/* Plain text for now; chapter 07 renders the links (RichText). */}
+            <p>{plainExplanation(props.imgData)}</p>
           </div>
         </div>
       </div>

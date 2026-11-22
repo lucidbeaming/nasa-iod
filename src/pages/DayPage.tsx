@@ -46,6 +46,8 @@ export function DayPage() {
   }
   return (
     <div id="main">
+      {/* See the heading note in FeedPage.tsx. */}
+      <h2 className="visually-hidden">Picture for {date}</h2>
       {/* The same boundaries as the feed: a skeleton while loading, and a
           message with Try again if it fails (including "no picture for that
           day", the API's 404). */}

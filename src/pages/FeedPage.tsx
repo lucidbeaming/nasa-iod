@@ -23,6 +23,11 @@ export function FeedPage() {
         name="description"
         content="An infinite-scrolling feed of NASA's Astronomy Picture of the Day."
       />
+      {/* Every page starts its content with a heading (h1 is the site
+          title in the header; entries are h3). Screen reader users navigate
+          by headings, and a skipped level suggests something is missing.
+          The feed doesn't need a *visible* heading, so it's visually hidden. */}
+      <h2 className="visually-hidden">Latest pictures</h2>
       <FeedBoundary>
         <Feed />
       </FeedBoundary>

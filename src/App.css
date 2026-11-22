@@ -411,3 +411,52 @@
 .page-title {
   margin: 0 0 2rem 10vw;
 }
+
+/* Accessibility (chapter 10). */
+#content {
+  flex-grow: 1;
+  min-width: 0;
+}
+
+/* <main> is focused by script after navigation; no ring for that. */
+#content:focus {
+  outline: none;
+}
+
+/* A clear focus ring for keyboard users on everything interactive. */
+:focus-visible {
+  outline: 3px solid #3b5bdb;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 2;
+  padding: 0.5rem 1rem;
+  background: #fff;
+  border: 2px solid #3b5bdb;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iod-loader.active:after {
+    animation: none;
+    border-color: #ccc;
+  }
+}
+
+/* Date stamp contrast: white text needs at least 4.5:1 (WCAG 1.4.3). The
+   2021 colors (#7686b7, #999) gave about 3.6:1 and 2.8:1. */
+.calendar-stamp .month {
+  background-color: #4c5a8a;
+}
+
+.calendar-stamp .year {
+  background-color: #666;
+}

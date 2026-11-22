@@ -64,7 +64,9 @@ function App() {
     }
     // An empty dependency array means "run once after the first render".
     // oxlint's exhaustive-deps rule would flag `winHeight` as missing; it's
-    // left as in 2021 so the bug stays visible until chapter 05.
+    // left as in 2021 so the bug stays visible until chapter 05. Suppressing
+    // a hooks rule also makes the React Compiler skip this whole component
+    // (see vite.config.ts): it can't prove the code is safe to memoize.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 

@@ -51,6 +51,16 @@ Read in this order:
 | `src/Main.tsx`                        | 📘 environment variables in Vite; the loading-flag data flow (#9) |
 | `src/ImageBlock.tsx`, `src/Image.tsx` | keys; toggled vs one-way state (#12)                              |
 
+## Chapter 02: React Compiler
+
+| File                            | Concepts                                                           |
+| ------------------------------- | ------------------------------------------------------------------ |
+| `vite.config.ts`                | 📘 the React Compiler: what it memoizes, when it skips a component |
+| `.oxlintrc.json`                | the compiler's lint rules, loaded into oxlint as a JS plugin       |
+| `src/App.tsx`, `src/Header.tsx` | why these two are skipped: a suppressed hooks rule                 |
+
+Try it: `npm run lint` shows a `react-compiler(set-state-in-effect)` warning in `Header.tsx`. That's the 2021 pattern of copying derived data into state inside an effect, which chapter 08 removes.
+
 ## Target structure
 
 ```

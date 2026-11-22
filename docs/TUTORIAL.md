@@ -31,6 +31,26 @@ The starting point is tag [`v0-2021`](https://github.com/lucidbeaming/nasa-iod/t
 
 Each chapter gets a section below once it's merged, listing the files to read in order and the concepts each one introduces.
 
+## Chapter 01: Vite, React 19 and TypeScript
+
+The migration is split into commits so each step is visible on its own:
+
+1. **`chore: replace Create React App with Vite and React 19`**: the original JavaScript, renamed to `.jsx`, running on Vite. Only the changes Vite and React 19 require: `index.html` moves to the root, `ReactDOM.render` becomes `createRoot`, and `process.env.REACT_APP_*` becomes `import.meta.env.VITE_*`.
+2. **`refactor: port the app to TypeScript`**: the same components as `.tsx` with typed props. Behavior is unchanged on purpose; the known bugs are marked with their issue numbers.
+3. **`chore: add oxlint and Prettier`** and **`style: format with Prettier`**.
+
+Read in this order:
+
+| File                                  | Concepts                                                          |
+| ------------------------------------- | ----------------------------------------------------------------- |
+| `index.html`, `vite.config.ts`        | Vite's entry point and plugins                                    |
+| `tsconfig.json`, `tsconfig.app.json`  | project references; why Vite doesn't type-check                   |
+| `src/index.tsx`                       | 📘 StrictMode; ⚠️ `ReactDOM.render`                               |
+| `src/types.ts`                        | 📘 types describe, they don't check                               |
+| `src/App.tsx`                         | lifting state up; the stale-closure bug (#10)                     |
+| `src/Main.tsx`                        | 📘 environment variables in Vite; the loading-flag data flow (#9) |
+| `src/ImageBlock.tsx`, `src/Image.tsx` | keys; toggled vs one-way state (#12)                              |
+
 ## Target structure
 
 ```

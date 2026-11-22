@@ -1,0 +1,35 @@
+// TypeScript settings for the app code in src/ (runs in the browser).
+// Vite does not type-check: it strips types and moves on, which keeps the dev
+// server fast. `tsc -b` (part of `npm run build`) is what reports type errors.
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "es2023",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "esnext",
+    // Adds types for import.meta.env and for importing CSS and image files.
+    "types": ["vite/client"],
+    "skipLibCheck": true,
+
+    /* Bundler mode: let Vite resolve imports; TypeScript only checks them. */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    // Type-only imports must say `import type`, so Vite can drop them safely.
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Strictness. `strict` is on by default since TypeScript 6; it's spelled
+       out here because it's the most important line in this file. */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    // Disallows TypeScript-only runtime syntax (enums, namespaces), so every
+    // file is plain JavaScript once the types are removed.
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "include": ["src"]
+}

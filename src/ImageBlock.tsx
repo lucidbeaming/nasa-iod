@@ -2,7 +2,7 @@
  * src/ImageBlock.tsx
  *
  * WHAT: Renders the list of loaded entries.
- * WHERE: Rendered by Main.tsx with the accumulated list.
+ * WHERE: Rendered by components/Feed/Feed.tsx with the loaded list.
  * CONCEPTS: rendering lists, keys
  * READ MORE: https://react.dev/learn/rendering-lists
  *

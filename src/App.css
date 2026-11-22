@@ -285,3 +285,10 @@
     font-size: 0.7em;
   }
 }
+
+/* End of the archive (chapter 04). Restyled with the rest in chapter 12. */
+.iod-end {
+  margin: 4rem auto 30vh auto;
+  text-align: center;
+  color: #666;
+}

@@ -148,6 +148,20 @@ Try it: open the app in two tabs and favorite a picture in one. The count update
 
 Try it: open `/day/1995-06-16`, the first APOD ever.
 
+## Chapter 10: Accessible interactions
+
+| File                                  | Concepts                                                                                                                                                                                                                      |
+| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/components/Entry/Entry.tsx`      | ⚠️ unnamed icon buttons; toggle buttons (`aria-pressed`) vs disclosure buttons (`aria-expanded` + `aria-controls`); `useId`; `hidden` vs CSS-collapsed content; a polite live region for confirmations; naming an `<article>` |
+| `src/App.tsx`                         | 📘 focus management after client-side navigation; ⚠️ "first run" flags under StrictMode; skip links; the `<main>` landmark                                                                                                    |
+| `src/Header.tsx`                      | the about disclosure; removing vs hiding an empty link                                                                                                                                                                        |
+| `src/components/Entry/DateStamp.tsx`  | why not `aria-label` on `<time>`                                                                                                                                                                                              |
+| `src/components/Entry/ImageEntry.tsx` | saying that a link opens a new tab                                                                                                                                                                                            |
+| `src/pages/FeedPage.tsx`              | a visually hidden heading to keep the outline whole                                                                                                                                                                           |
+| `src/App.css` (end)                   | `:focus-visible`, contrast, `prefers-reduced-motion`                                                                                                                                                                          |
+
+Try it: press Tab once on any page. The first stop is "Skip to content". Then use only the keyboard to favorite a picture and open its explanation.
+
 ## Target structure
 
 ```

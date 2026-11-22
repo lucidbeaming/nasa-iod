@@ -97,6 +97,17 @@ The ⚠️ in `Feed.tsx` is a real mistake made while writing this chapter. A te
 
 Try it: open the dev tools' Performance panel and scroll. Before this chapter, every scroll event ran a handler and measured the layout. Now nothing runs until the sentinel crosses its margin.
 
+## Chapter 06: Loading and error states
+
+| File                                   | Concepts                                                                                         |
+| -------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `src/components/Feed/FeedBoundary.tsx` | 📘 Suspense and error boundaries, together; where to place a boundary; `QueryErrorResetBoundary` |
+| `src/components/ErrorFallback.tsx`     | narrowing `unknown` errors; messages a reader can act on; `role="alert"`                         |
+| `src/components/Feed/FeedSkeleton.tsx` | skeleton screens; `aria-busy`                                                                    |
+| `src/components/Feed/Feed.tsx`         | 📘 live regions; an inline retry for a failed later page                                         |
+
+Try it: in the dev tools' Network panel, set throttling to "Offline" and reload. The feed shows "You seem to be offline", and the header still works. Go back online and press "Try again".
+
 ## Target structure
 
 ```

@@ -80,7 +80,13 @@ The devtools (`@tanstack/react-query-devtools`) are worth adding while developin
 
 ## Error boundaries
 
-_Chapter 06: react-error-boundary._
+### react-error-boundary (`react-error-boundary`)
+
+**Why:** React catches rendering errors only in _class_ components that implement `getDerivedStateFromError`; there's no hook for it. This tiny package is that class, with a `FallbackComponent` prop and a `resetErrorBoundary` callback. Paired with TanStack Query's `QueryErrorResetBoundary`, "Try again" clears both the boundary and the failed query.
+
+**Plain alternative:** write the ~30-line class yourself (React's docs show one). It's the same thing, minus the reset helpers.
+
+**When you wouldn't need it:** frameworks with route-level error handling (React Router's `errorElement`, Next.js `error.tsx`) provide their own boundaries.
 
 ## Routing
 

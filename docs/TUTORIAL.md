@@ -188,6 +188,10 @@ The 400-line global `App.css` is gone. Each component's styles sit next to it, a
 
 Try it: switch your system to dark mode. Every color changes, but no component has a dark variant; only the token values change.
 
+## Chapter 13: About text and credits
+
+A content fix, not a code lesson. `src/Header.tsx`'s about panel credited NASA's Image of the Day gallery (a different site) and said "inifinite". It now credits APOD, its authors Robert Nemiroff and Jerry Bonnell, and links to this repository. Per-picture credits have been shown under each title since chapter 07.
+
 ## Target structure
 
 ```

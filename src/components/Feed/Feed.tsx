@@ -4,10 +4,10 @@
  * WHAT: The feed. Reads the archive from TanStack Query, page by page, and
  *       asks for the next page when a sentinel after the last entry comes
  *       near the viewport.
- * WHERE: Rendered by App.tsx inside a <Suspense> boundary. Renders
+ * WHERE: Rendered by App.tsx inside <FeedBoundary>. Renders
  *        <Imageblock> with the de-duplicated list.
- * CONCEPTS: useSuspenseInfiniteQuery, Suspense (first look), effects that
- *           synchronize with external state, sentinels
+ * CONCEPTS: useSuspenseInfiniteQuery, Suspense, effects that synchronize
+ *           with external state, sentinels, live regions
  * READ MORE:
  *   - https://tanstack.com/query/latest/docs/framework/react/reference/useSuspenseInfiniteQuery
  *   - https://react.dev/reference/react/Suspense
@@ -31,12 +31,13 @@ interface FeedProps {
 
 /** The infinite feed of APOD entries, newest first. */
 function Feed({ setNewFav }: FeedProps) {
-  // 📘 Concept: Suspense (first look; chapter 06 covers it fully)
+  // 📘 Concept: Suspense (see FeedBoundary.tsx for the full picture)
   // The "suspense" version of the hook never returns while the first page is
   // loading. It suspends instead, and React shows the nearest <Suspense
-  // fallback> (in App.tsx) until the data is ready. So below this line,
-  // `entries` is always loaded data: there is no `isLoading` branch to
-  // write, and no way to render an empty list by mistake.
+  // fallback> until the data is ready. If the first page fails, the hook
+  // throws, and the nearest error boundary takes over. So below this line,
+  // `entries` is always loaded data: there's no `isLoading` or `isError`
+  // branch to write, and no way to render an empty list by mistake.
   //
   // `data` is whatever `select` in feedQuery returns: here, a flat list
   // with one entry per date.
@@ -56,8 +57,8 @@ function Feed({ setNewFav }: FeedProps) {
 
   // Ask for the next page while the bottom is near, there is a next page,
   // and none is already on its way. This effect *synchronizes* the query with
-  // what the observer reports, which is what effects are for. Every value it reads is in the
-  // dependency array, so it re-checks whenever any of them changes: after a
+  // what the observer reports, which is what effects are for. Every value it
+  // reads is in the dependency array, so it re-checks whenever any of them changes: after a
   // page arrives (isFetchingNextPage flips back to false), it loads another
   // if the user is still near the bottom.
   //
@@ -75,7 +76,7 @@ function Feed({ setNewFav }: FeedProps) {
   // is still at the bottom, so the effect immediately asks again, and again:
   // a test with a stubbed 404 made 17,057 requests in a few seconds. An
   // effect that starts work must also know when to *stop*. After a failed
-  // page, nothing loads until the user asks (chapter 06 adds a Retry button).
+  // page, nothing loads until the user presses "Try again" below.
   useEffect(() => {
     if (nearBottom && hasNextPage && !isFetchingNextPage && !isFetchNextPageError) {
       void fetchNextPage()
@@ -85,13 +86,29 @@ function Feed({ setNewFav }: FeedProps) {
   return (
     <div id="main">
       <Imageblock imageList={entries} setNewFav={setNewFav} />
+
+      {/* 📘 Concept: live regions
+          Sighted readers see the spinner; screen reader users need words. An
+          element with role="status" is a *polite live region*: when its text
+          changes, screen readers announce the new text at the next pause,
+          without moving focus. It must be in the page before its text
+          changes (a region that appears already filled is often not
+          announced), so it's always rendered, and only its text varies. */}
+      <p className="visually-hidden" role="status">
+        {isFetchingNextPage ? 'Loading earlier pictures…' : ''}
+      </p>
+
       {isFetchNextPageError ? (
-        // A failed *later* page keeps everything already loaded on screen.
+        // A failed *later* page keeps everything already loaded on screen,
+        // so it gets an inline message rather than the error boundary.
         // (A failed *first* page has nothing to show; it's thrown to the
-        // nearest error boundary, which chapter 06 adds.)
-        <p className="iod-end" role="alert">
-          Couldn’t load earlier pictures: {error?.message}
-        </p>
+        // boundary in FeedBoundary.tsx.) fetchNextPage() retries the page.
+        <div className="iod-error" role="alert">
+          <p>Couldn’t load earlier pictures: {error?.message}</p>
+          <button type="button" onClick={() => void fetchNextPage()}>
+            Try again
+          </button>
+        </div>
       ) : hasNextPage ? (
         // The loader doubles as the sentinel. It's only rendered while
         // there's more to load, so the observer stops with it.

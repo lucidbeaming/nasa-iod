@@ -4,7 +4,7 @@
  * WHAT: The root component: the page layout, and the favorites count shared
  *       by the header and the feed.
  * WHERE: Rendered by main.tsx. Renders <Header> and <Feed>.
- * CONCEPTS: lifting state up, a Suspense boundary
+ * CONCEPTS: lifting state up, where to put boundaries
  * READ MORE:
  *   - https://react.dev/learn/sharing-state-between-components
  *   - https://react.dev/reference/react/Suspense
@@ -14,10 +14,11 @@
  * hooks/useInView.ts, used by the feed itself: the component that needs to
  * know "is the bottom near?" now asks the browser directly.
  */
-import { Suspense, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Header from './Header.tsx'
 import Feed from './components/Feed/Feed.tsx'
+import { FeedBoundary } from './components/Feed/FeedBoundary.tsx'
 
 /** Root component: header, feed, and the state they share. */
 function App() {
@@ -30,12 +31,12 @@ function App() {
   return (
     <div id="iod">
       <Header newFav={newFav} />
-      {/* <Feed> suspends until its first page arrives (see 📘 Suspense in
-          Feed.tsx); until then React shows this fallback, the same loader
-          the 2021 app used. Chapter 06 adds a skeleton and error handling. */}
-      <Suspense fallback={<div className="iod-loader active"></div>}>
+      {/* Loading and error handling for the feed only (see 📘 in
+          FeedBoundary.tsx): if NASA's service is down, the header still
+          works. */}
+      <FeedBoundary>
         <Feed setNewFav={setNewFav} />
-      </Suspense>
+      </FeedBoundary>
     </div>
   )
 }

@@ -10,24 +10,24 @@ The starting point is tag [`v0-2021`](https://github.com/lucidbeaming/nasa-iod/t
 
 ## Chapters
 
-| Ch. | Topic | Issue | Tag | Concepts |
-|---|---|---|---|---|
-| 00 | Textbook standards | #13 | `chapter-00` | conventions, how to read this repo |
-| 01 | Create React App → Vite + React 19 + TypeScript | #14 | `chapter-01` | `createRoot`, `import.meta.env`, typed props |
-| 02 | React Compiler | #15 | `chapter-02` | automatic memoization |
-| 03 | Typed APOD client | #16 | `chapter-03` | Zod, discriminated unions, parsing at the boundary, `AbortSignal` |
-| 04 | TanStack Query infinite queries | #17 | `chapter-04` | server state vs client state, caching, pagination |
-| 05 | Infinite scroll | #18 | `chapter-05` | IntersectionObserver, callback refs with cleanup |
-| 06 | Loading and error states | #19 | `chapter-06` | Suspense, error boundaries, `aria-live` |
-| 07 | Every media type | #20 | `chapter-07` | rendering a discriminated union, derived state, responsive images |
-| 08 | Favorites | #21 | `chapter-08` | `useSyncExternalStore`, `localStorage`, data migration |
-| 09 | Routing | #22 | `chapter-09` | React Router, document metadata, deep links on static hosting |
-| 10 | Accessibility | #23 | `chapter-10` | ARIA state, focus management, reduced motion |
-| 11 | Jump to a date | #24 | `chapter-11` | form Actions, `useActionState`, `useFormStatus` |
-| 12 | Styling | #25 | `chapter-12` | CSS Modules, design tokens, dark mode |
-| 13 | About text and credits | #26 | `chapter-13` | — |
-| 14 | GitHub Pages | #27 | `chapter-14` | static deployment, base paths |
-| 15 | Docs and README | #28 | `chapter-15` | — |
+| Ch. | Topic                                           | Issue | Tag          | Concepts                                                          |
+| --- | ----------------------------------------------- | ----- | ------------ | ----------------------------------------------------------------- |
+| 00  | Textbook standards                              | #13   | `chapter-00` | conventions, how to read this repo                                |
+| 01  | Create React App → Vite + React 19 + TypeScript | #14   | `chapter-01` | `createRoot`, `import.meta.env`, typed props                      |
+| 02  | React Compiler                                  | #15   | `chapter-02` | automatic memoization                                             |
+| 03  | Typed APOD client                               | #16   | `chapter-03` | Zod, discriminated unions, parsing at the boundary, `AbortSignal` |
+| 04  | TanStack Query infinite queries                 | #17   | `chapter-04` | server state vs client state, caching, pagination                 |
+| 05  | Infinite scroll                                 | #18   | `chapter-05` | IntersectionObserver, callback refs with cleanup                  |
+| 06  | Loading and error states                        | #19   | `chapter-06` | Suspense, error boundaries, `aria-live`                           |
+| 07  | Every media type                                | #20   | `chapter-07` | rendering a discriminated union, derived state, responsive images |
+| 08  | Favorites                                       | #21   | `chapter-08` | `useSyncExternalStore`, `localStorage`, data migration            |
+| 09  | Routing                                         | #22   | `chapter-09` | React Router, document metadata, deep links on static hosting     |
+| 10  | Accessibility                                   | #23   | `chapter-10` | ARIA state, focus management, reduced motion                      |
+| 11  | Jump to a date                                  | #24   | `chapter-11` | form Actions, `useActionState`, `useFormStatus`                   |
+| 12  | Styling                                         | #25   | `chapter-12` | CSS Modules, design tokens, dark mode                             |
+| 13  | About text and credits                          | #26   | `chapter-13` | —                                                                 |
+| 14  | GitHub Pages                                    | #27   | `chapter-14` | static deployment, base paths                                     |
+| 15  | Docs and README                                 | #28   | `chapter-15` | —                                                                 |
 
 Each chapter gets a section below once it's merged, listing the files to read in order and the concepts each one introduces.
 

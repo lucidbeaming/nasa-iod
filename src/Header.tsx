@@ -79,8 +79,8 @@ function Header(props: HeaderProps) {
       </button>
       <div className={`app-info${collapsed}`}>
         <p>
-          This is a demonstration of inifinite scrolling in a React app. The official NASA image
-          of the day site is{' '}
+          This is a demonstration of inifinite scrolling in a React app. The official NASA image of
+          the day site is{' '}
           <a href="https://www.nasa.gov/multimedia/imagegallery/iotd.html">
             https://www.nasa.gov/multimedia/imagegallery/iotd.html
           </a>

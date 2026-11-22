@@ -460,3 +460,29 @@
 .calendar-stamp .year {
   background-color: #666;
 }
+
+/* Jump to a date (chapter 11). Restyled with the rest in chapter 12. */
+.jump-to-date {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.jump-to-date label {
+  flex-basis: 100%;
+  font-size: 0.9em;
+}
+
+.jump-to-date input {
+  flex: 1;
+  min-width: 0;
+}
+
+.jump-error {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.85em;
+  color: #b3261e;
+}

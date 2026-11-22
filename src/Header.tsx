@@ -9,10 +9,12 @@
  *
  * Since chapter 08 the count comes straight from the favorites store. Since
  * chapter 09 the title links home and "SHOW" links to the favorites page
- * (in 2021 it only logged the saved dates to the console).
+ * (in 2021 it only logged the saved dates to the console). Chapter 11 added
+ * the jump-to-date form.
  */
 import { useId, useState } from 'react'
 import { Link } from 'react-router'
+import { JumpToDate } from './components/JumpToDate/JumpToDate.tsx'
 import { useFavorites } from './hooks/useFavorites.ts'
 
 /** Page header with the favorites count and the about panel. */
@@ -55,6 +57,7 @@ function Header() {
           </Link>
         )}
       </p>
+      <JumpToDate />
       <button
         type="button"
         className="iod-link"

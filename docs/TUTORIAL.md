@@ -29,7 +29,19 @@ The starting point is tag [`v0-2021`](https://github.com/lucidbeaming/nasa-iod/t
 | 14  | GitHub Pages                                    | #27   | `chapter-14` | static deployment, base paths                                     |
 | 15  | Docs and README                                 | #28   | `chapter-15` | —                                                                 |
 
-Each chapter gets a section below once it's merged, listing the files to read in order and the concepts each one introduces.
+Each chapter's section below lists the files to read, in order, and the concepts each introduces. To see the full change, compare its tag with the one before it, for example `git diff chapter-04 chapter-05`, or open the chapter's pull request from its issue.
+
+## How to read this code
+
+There are three ways in, depending on what you're after:
+
+- **Front to back:** follow the chapters below. Each one changes one thing, and its ⚠️ comments show what the 2021 code did instead.
+- **By concept:** the [concept index](#concept-index) at the end lists every 📘 Concept block and ⚠️ Common mistake, with the file that explains it.
+- **As a finished app:** start at `src/main.tsx` and follow the imports: the router, the layout (`App.tsx`), a page (`pages/FeedPage.tsx`), the feed, then an entry.
+
+## Chapter 00: Textbook standards
+
+No code. `docs/CONVENTIONS.md` sets the commenting rules (file headers, explained hooks, 📘 and ⚠️ blocks, TSDoc) and the issue → branch → pull request → tag workflow every chapter follows. `docs/STACK.md` justifies each dependency as it arrives.
 
 ## Chapter 01: Vite, React 19 and TypeScript
 
@@ -202,23 +214,80 @@ A content fix, not a code lesson. `src/Header.tsx`'s about panel credited NASA's
 
 Deploy with `npm run deploy`. The live demo is at https://lucidbeaming.github.io/nasa-iod/.
 
-## Target structure
+## Chapter 15: Tutorial docs and README
+
+This guide's reading paths, the concept index and the final structure below, plus the README: demo link, screenshots, how to run and deploy, stack summary, credits and license. With this chapter the rewrite is complete and released as `v1.0.0`.
+
+## Final structure
 
 ```
 src/
-  main.tsx                 entry: createRoot, providers
-  App.tsx                  routes + layout
-  api/apod.ts              fetch client, Zod schemas, error types
-  api/queries.ts           TanStack Query keys and query options
-  lib/dates.ts             APOD date helpers (YYMMDD codes, archive range)
-  hooks/useInView.ts       IntersectionObserver via a callback ref with cleanup
-  hooks/useFavorites.ts    useSyncExternalStore over localStorage
-  components/Feed/         infinite list, sentinel, end of archive
-  components/Entry/        ImageEntry / VideoEntry / LinkEntry
-  components/Favorites/
-  components/JumpToDate/   form Actions
-  components/ErrorFallback.tsx
-  styles/tokens.css
+  main.tsx                    entry: createRoot, QueryClient, router and routes
+  App.tsx                     layout: skip link, header, <main>, focus after navigation
+  Header.tsx                  site title, favorites count, jump-to-date, about panel
+  api/
+    apod.ts                   fetch client, Zod schemas, ApodEntry union, ApiError
+    richText.ts               allow-listed HTML → RichText; video embed URLs
+    queries.ts                query keys, feed and day queries, QueryClient + retry policy
+  lib/
+    dates.ts                  archive range, today in US Eastern, YYMMDD codes
+    favorites.ts              the favorites store (localStorage, migration, cross-tab sync)
+  hooks/
+    useInView.ts              IntersectionObserver through a callback ref
+    useFavorites.ts           useSyncExternalStore over the favorites store
+  pages/
+    FeedPage.tsx · DayPage.tsx · FavoritesPage.tsx · NotFoundPage.tsx
+  components/
+    Feed/                     Feed, FeedBoundary (Suspense + error boundary), FeedSkeleton
+    Entry/                    Entry frame; ImageEntry, VideoEntry, LinkEntry; RichText; DateStamp
+    JumpToDate/               the form Actions example
+    ErrorFallback.tsx
+  styles/
+    tokens.css · global.css · page.module.css
+  *.module.css                each component's styles, next to it
 docs/
   CONVENTIONS.md · STACK.md · TUTORIAL.md
 ```
+
+## Concept index
+
+Every 📘 Concept block, in the order the chapters introduce them:
+
+| Concept                                                | File                                       | Chapter |
+| ------------------------------------------------------ | ------------------------------------------ | ------- |
+| StrictMode                                             | `src/main.tsx`                             | 01      |
+| The React Compiler                                     | `vite.config.ts`                           | 02      |
+| Parse, don't just type                                 | `src/api/apod.ts`                          | 03      |
+| Discriminated unions                                   | `src/api/apod.ts`                          | 03      |
+| Never render someone else's HTML directly              | `src/api/richText.ts`                      | 03      |
+| Server state is not component state                    | `src/api/queries.ts`                       | 04      |
+| Providers                                              | `src/main.tsx`                             | 04      |
+| Suspense (first look)                                  | `src/components/Feed/Feed.tsx`             | 04      |
+| Callback refs with cleanup (React 19)                  | `src/hooks/useInView.ts`                   | 05      |
+| Suspense and error boundaries, together                | `src/components/Feed/FeedBoundary.tsx`     | 06      |
+| Live regions                                           | `src/components/Feed/Feed.tsx`             | 06      |
+| Exhaustiveness checking                                | `src/components/Entry/Entry.tsx`           | 07      |
+| An external store                                      | `src/lib/favorites.ts`                     | 08      |
+| Data migrations                                        | `src/lib/favorites.ts`                     | 08      |
+| Client-side routing (and deep links on static hosting) | `src/main.tsx`                             | 09      |
+| Document metadata in React 19                          | `src/pages/FeedPage.tsx`                   | 09      |
+| Focus management after client-side navigation          | `src/App.tsx`                              | 10      |
+| Actions                                                | `src/components/JumpToDate/JumpToDate.tsx` | 11      |
+| CSS Modules                                            | `src/styles/global.css`                    | 12      |
+| Design tokens                                          | `src/styles/tokens.css`                    | 12      |
+
+Every ⚠️ Common mistake. Most quote the 2021 code at tag `v0-2021`, and two were made while writing this rewrite:
+
+| Mistake                                                                    | Fixed in                              | Chapter |
+| -------------------------------------------------------------------------- | ------------------------------------- | ------- |
+| `ReactDOM.render` (removed in React 19)                                    | `src/main.tsx`                        | 01      |
+| `res.json()` without checking `res.ok`                                     | `src/api/apod.ts`                     | 03      |
+| Re-requesting while a request is in flight                                 | `src/components/Feed/Feed.tsx`        | 04      |
+| An effect that never stops after a failure (made while writing chapter 04) | `src/components/Feed/Feed.tsx`        | 04      |
+| A scroll listener with a stale `winHeight` closure                         | `src/hooks/useInView.ts`              | 05      |
+| Toggling a "loaded" flag                                                   | `src/components/Entry/ImageEntry.tsx` | 07      |
+| Array indexes as keys                                                      | `src/components/Feed/Feed.tsx`        | 07      |
+| Favorites passed around by prop callbacks; uncached store snapshots        | `src/lib/favorites.ts`                | 08      |
+| Derived data copied into state by an effect                                | `src/Header.tsx`                      | 08      |
+| Icon buttons with no name or state                                         | `src/components/Entry/Entry.tsx`      | 10      |
+| A "first run" ref flag under StrictMode                                    | `src/App.tsx`                         | 10      |

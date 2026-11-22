@@ -3,10 +3,12 @@
  *
  * WHAT: Build and dev-server configuration for Vite.
  * WHERE: Read by `npm run dev`, `npm run build` and `npm run preview`.
- * CONCEPTS: Vite plugins, the React Compiler
+ * CONCEPTS: Vite plugins, the React Compiler, base paths, writing a plugin
  * READ MORE:
  *   - https://vite.dev/config/
  *   - https://react.dev/learn/react-compiler
+ *   - https://vite.dev/guide/static-deploy#github-pages
+ *   - https://vite.dev/guide/api-plugin
  *
  * Vite replaces Create React App, which this project used until 2021.
  * The dev server serves source files as native ES modules (no bundling),
@@ -14,9 +16,43 @@
  */
 import babel from '@rolldown/plugin-babel'
 import react, { reactCompilerPreset } from '@vitejs/plugin-react'
-import { defineConfig } from 'vite'
+import { copyFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import { defineConfig, type Plugin } from 'vite'
 
-export default defineConfig({
+/**
+ * Copies the built index.html to 404.html.
+ *
+ * GitHub Pages serves 404.html for any path it has no file for. Since that
+ * file *is* the app, a deep link like /nasa-iod/day/2026-11-22 boots the
+ * app, and React Router reads the real URL and shows the right page. (See
+ * the routing note in src/main.tsx for the trade-offs.)
+ *
+ * A Vite plugin is an object with a name and hooks into the build;
+ * `writeBundle` runs after the output files are on disk.
+ */
+function spaFallback(): Plugin {
+  let outDir = 'dist'
+  return {
+    name: 'spa-fallback-404',
+    apply: 'build',
+    configResolved(config) {
+      outDir = config.build.outDir
+    },
+    async writeBundle() {
+      await copyFile(join(outDir, 'index.html'), join(outDir, '404.html'))
+    },
+  }
+}
+
+// defineConfig can take a function: `command` is 'serve' for the dev server
+// and 'build' for production builds (and `vite preview`, which serves them).
+export default defineConfig(({ command }) => ({
+  // GitHub Pages serves this repository's site from /nasa-iod/, so built
+  // asset URLs must start there. The dev server keeps "/". Vite exposes the
+  // value as import.meta.env.BASE_URL, which the router uses as its
+  // basename (src/main.tsx).
+  base: command === 'build' ? '/nasa-iod/' : '/',
   plugins: [
     // @vitejs/plugin-react compiles JSX/TSX and enables Fast Refresh: editing
     // a component re-renders it in place, keeping its state.
@@ -44,5 +80,7 @@ export default defineConfig({
     // stable 1.0 release. plugin-react also offers `react({ compiler: true })`
     // using a Rust port, which is faster but still experimental.
     babel({ presets: [reactCompilerPreset()] }),
+
+    spaFallback(),
   ],
-})
+}))

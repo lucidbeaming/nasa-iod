@@ -192,6 +192,16 @@ Try it: switch your system to dark mode. Every color changes, but no component h
 
 A content fix, not a code lesson. `src/Header.tsx`'s about panel credited NASA's Image of the Day gallery (a different site) and said "inifinite". It now credits APOD, its authors Robert Nemiroff and Jerry Bonnell, and links to this repository. Per-picture credits have been shown under each title since chapter 07.
 
+## Chapter 14: Deploy to GitHub Pages
+
+| File             | Concepts                                                                                                                              |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `vite.config.ts` | `base` for a project site; config as a function of `command`; writing a small Vite plugin (`writeBundle`) for the `404.html` fallback |
+| `package.json`   | `predeploy`/`deploy` scripts with `gh-pages`; `homepage`                                                                              |
+| `src/main.tsx`   | how `basename` follows `import.meta.env.BASE_URL`                                                                                     |
+
+Deploy with `npm run deploy`. The live demo is at https://lucidbeaming.github.io/nasa-iod/.
+
 ## Target structure
 
 ```

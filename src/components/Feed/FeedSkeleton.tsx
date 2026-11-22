@@ -10,6 +10,8 @@
  * because it takes up roughly the space of the real content, the page
  * doesn't jump when the pictures arrive.
  */
+import entry from '../Entry/Entry.module.css'
+import styles from './FeedSkeleton.module.css'
 
 /** Number of placeholder entries: enough to fill a tall screen. */
 const PLACEHOLDERS = 3
@@ -26,13 +28,13 @@ export function FeedSkeleton() {
       {Array.from({ length: PLACEHOLDERS }, (_, i) => (
         // These placeholders never reorder or change, so an index is a fine
         // key here (compare the ⚠️ about keys in ImageBlock.tsx).
-        <div className="image-block skeleton" key={i} aria-hidden="true">
-          <div className="image-block-left"></div>
-          <div className="image-block-inner">
-            <div className="skeleton-image"></div>
-            <div className="skeleton-title"></div>
+        <div className={entry.entry} key={i} aria-hidden="true">
+          <div className={entry.left}></div>
+          <div className={entry.card}>
+            <div className={styles.image}></div>
+            <div className={styles.title}></div>
           </div>
-          <div className="image-block-right"></div>
+          <div className={entry.right}></div>
         </div>
       ))}
     </div>

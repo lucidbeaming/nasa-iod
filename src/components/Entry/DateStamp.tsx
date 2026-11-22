@@ -9,6 +9,7 @@
  *   - https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Intl/DateTimeFormat
  */
 import type { IsoDate } from '../../lib/dates.ts'
+import styles from './DateStamp.module.css'
 
 // Formatters are built once, at module level, and reused for every stamp.
 // timeZone: 'UTC' matters: a `YYYY-MM-DD` string parses as midnight UTC,
@@ -28,15 +29,15 @@ export function DateStamp({ date }: { date: IsoDate }) {
     // three stamp parts are hidden from them, or they'd hear "NOV 22 2026"
     // as three separate words. (An aria-label on <time> looks simpler, but
     // <time> has no role that allows naming, so screen readers may ignore it.)
-    <time className="calendar-stamp" dateTime={date}>
+    <time className={styles.stamp} dateTime={date}>
       <span className="visually-hidden">{full.format(d)}</span>
-      <span className="month" aria-hidden="true">
+      <span className={styles.month} aria-hidden="true">
         {month.format(d)}
       </span>
-      <span className="day" aria-hidden="true">
+      <span className={styles.day} aria-hidden="true">
         {d.getUTCDate()}
       </span>
-      <span className="year" aria-hidden="true">
+      <span className={styles.year} aria-hidden="true">
         {d.getUTCFullYear()}
       </span>
     </time>

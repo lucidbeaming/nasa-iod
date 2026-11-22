@@ -12,6 +12,7 @@
  */
 import { useState } from 'react'
 import type { ImageEntry as ImageEntryData } from '../../api/apod.ts'
+import styles from './Media.module.css'
 
 /** Widths offered to the browser. NASA's image service resizes with `?w=`. */
 const WIDTHS = [480, 800, 1200, 1600, 2400]
@@ -42,7 +43,7 @@ export function ImageEntry({ entry, priority = false }: ImageEntryProps) {
 
   if (status === 'failed') {
     return (
-      <p className="image-failed">
+      <p className={styles.notice}>
         The image couldn’t be loaded.{' '}
         <a href={entry.permalink} target="_blank" rel="noreferrer">
           View it on NASA’s site
@@ -55,11 +56,12 @@ export function ImageEntry({ entry, priority = false }: ImageEntryProps) {
   return (
     <a
       href={entry.hdurl}
-      className={`img-anchor${status === 'loading' ? ' loading' : ''}`}
+      className={status === 'loading' ? `${styles.imageLink} ${styles.loading}` : styles.imageLink}
       target="_blank"
       rel="noreferrer"
     >
       <img
+        className={styles.image}
         // The API's own description of the picture (#12). api/apod.ts falls
         // back to the title when an older entry only has boilerplate.
         alt={entry.alt}

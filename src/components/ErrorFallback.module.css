@@ -1,0 +1,9 @@
+/*
+ * src/components/ErrorFallback.module.css
+ */
+.error {
+  margin: var(--space-5) auto 30vh;
+  max-width: 36rem;
+  padding: 0 var(--space-3);
+  text-align: center;
+}

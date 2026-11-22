@@ -1,0 +1,36 @@
+/*
+ * src/components/Feed/Feed.module.css: the loader at the end of the feed,
+ * and the inline error for a failed later page.
+ */
+
+/* The loader doubles as the observer's sentinel (Feed.tsx), so it always
+   takes up space, and only draws the spinner while a page is loading. */
+.loader {
+  width: 80px;
+  height: 80px;
+  margin: 35vh auto 30vh;
+}
+
+.loading::after {
+  content: '';
+  display: block;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 6px solid var(--color-border);
+  border-color: var(--color-border) transparent;
+  border-radius: 50%;
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.error {
+  margin: var(--space-5) auto 30vh;
+  max-width: 36rem;
+  text-align: center;
+}

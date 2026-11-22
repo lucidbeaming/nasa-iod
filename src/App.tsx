@@ -17,7 +17,7 @@
  */
 import { useEffect, useRef } from 'react'
 import { Outlet, useLocation } from 'react-router'
-import './App.css'
+import styles from './App.module.css'
 import Header from './Header.tsx'
 
 /** Layout: skip link, header and the matched page. */
@@ -53,17 +53,17 @@ function App() {
   }, [pathname])
 
   return (
-    <div id="iod">
+    <div>
       {/* A skip link lets keyboard users jump past the header to the
           content. It's the first focusable element, visible only when
           focused. */}
-      <a className="skip-link" href="#content">
+      <a className={styles.skipLink} href="#content">
         Skip to content
       </a>
       <Header />
       {/* <main> is the page's main landmark. tabIndex={-1} lets the effect
           above focus it, without adding it to the Tab order. */}
-      <main id="content" ref={mainRef} tabIndex={-1}>
+      <main id="content" className={styles.main} ref={mainRef} tabIndex={-1}>
         {/* <Outlet> is where the matched child route renders: the feed at
             "/", the favorites page at "/favorites", and so on. */}
         <Outlet />

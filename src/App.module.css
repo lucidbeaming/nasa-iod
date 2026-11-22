@@ -1,0 +1,31 @@
+/*
+ * src/App.module.css: the layout around every page.
+ */
+
+/* On wide screens the header is a fixed card on the left (as in 2021) and
+   the page column is centered in the remaining space. */
+.main {
+  min-width: 0;
+}
+
+/* <main> receives focus from script after navigation (App.tsx); a focus
+   ring around the whole page would only be noise. */
+.main:focus {
+  outline: none;
+}
+
+/* Off screen until focused, then shown at the top left. */
+.skipLink {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 2;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg);
+  border: 2px solid var(--color-focus);
+  transform: translateY(-200%);
+}
+
+.skipLink:focus {
+  transform: none;
+}

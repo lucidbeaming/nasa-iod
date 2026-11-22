@@ -1,0 +1,30 @@
+/*
+ * src/components/JumpToDate/JumpToDate.module.css
+ */
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  align-items: center;
+  margin-bottom: var(--space-3);
+  text-align: left;
+}
+
+.form label {
+  flex-basis: 100%;
+  font-size: var(--font-size-small);
+}
+
+/* Full width in the narrow header card, so the whole date fits. */
+.form input {
+  flex: 1 1 100%;
+  min-width: 0;
+  font: inherit;
+}
+
+.error {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: var(--font-size-small);
+  color: var(--color-error);
+}

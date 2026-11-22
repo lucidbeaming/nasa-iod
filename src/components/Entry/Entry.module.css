@@ -1,0 +1,110 @@
+/*
+ * src/components/Entry/Entry.module.css: one entry in the feed.
+ *
+ * The 2021 layout: an empty left column, the card in the middle, and the
+ * date stamp in the right column.
+ */
+.entry {
+  display: flex;
+  margin-bottom: 20vh;
+}
+
+.left,
+.right {
+  flex: 0 0 10vw;
+}
+
+.card {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  border-radius: var(--radius-small);
+  background: var(--color-surface);
+}
+
+.titleBar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+}
+
+.title {
+  flex: 1;
+  margin: 0;
+}
+
+.title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.title a:hover {
+  text-decoration: underline;
+}
+
+.toolbox {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.message {
+  padding-right: var(--space-2);
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+/* Favorite and explanation buttons. */
+.toolButton {
+  min-width: 2.25rem;
+  min-height: 2.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-small);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font: inherit;
+  cursor: pointer;
+}
+
+/* Pressed states come from the ARIA attributes themselves: the styling
+   can't disagree with what assistive technology is told. */
+.toolButton[aria-pressed='true'],
+.toolButton[aria-expanded='true'] {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  border-color: var(--color-accent);
+}
+
+.credit {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 0.8em;
+  color: var(--color-text-muted);
+}
+
+.explanation {
+  line-height: 1.5;
+}
+
+/* Narrow screens: no side columns; the stamp sits in the card's corner. */
+@media (max-width: 768px) {
+  .entry {
+    position: relative;
+    margin: 0 var(--space-2) var(--space-5);
+  }
+
+  .left {
+    display: none;
+  }
+
+  .right {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    flex: none;
+  }
+}

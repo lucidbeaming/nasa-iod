@@ -25,6 +25,7 @@ import { useFavorites } from '../../hooks/useFavorites.ts'
 import { isFavorite, toggleFavorite } from '../../lib/favorites.ts'
 import { DateStamp } from './DateStamp.tsx'
 import { ImageEntry } from './ImageEntry.tsx'
+import styles from './Entry.module.css'
 import { LinkEntry } from './LinkEntry.tsx'
 import { RichText } from './RichText.tsx'
 import { VideoEntry } from './VideoEntry.tsx'
@@ -96,26 +97,26 @@ export function Entry({ entry, priority = false }: EntryProps) {
     // <article> marks a self-contained item in a feed; screen reader users
     // can jump from one article to the next. aria-labelledby names it after
     // its title, so that jump announces which picture it is.
-    <article className={`image-block entry-${entry.kind}`} aria-labelledby={titleId}>
-      <div className="image-block-left">&nbsp;</div>
-      <div className="image-block-inner">
+    <article className={styles.entry} data-kind={entry.kind} aria-labelledby={titleId}>
+      <div className={styles.left}></div>
+      <div className={styles.card}>
         <Media entry={entry} priority={priority} />
-        <div className="title-bar">
+        <div className={styles.titleBar}>
           {/* The title links to the day's permalink (/day/:date). */}
-          <h3 id={titleId}>
+          <h3 id={titleId} className={styles.title}>
             <Link to={`/day/${entry.date}`}>{entry.title}</Link>
           </h3>
           {/* ⚠️ Common mistake (from v0-2021, src/Image.js):
                 <button className="fav-toggle">*</button>
-                <button className="info-toggle">?</button>
+                <button className={styles.toolButton}>?</button>
               A screen reader announces these as "star, button" and
               "question mark, button": no hint of what they do or whether
               they're on (#12). An icon button needs a text name, and a button
               that switches something on and off needs to expose its state. */}
-          <div className="toolbox">
+          <div className={styles.toolbox}>
             {/* role="status" makes this a polite live region: the
                 confirmation is announced without moving focus. */}
-            <span className="fav-message" role="status">
+            <span className={styles.message} role="status">
               {savedFav}
             </span>
             {/* A *toggle button*: the name stays "Favorite", and
@@ -125,7 +126,7 @@ export function Entry({ entry, priority = false }: EntryProps) {
                 the visually hidden text. */}
             <button
               type="button"
-              className={`fav-toggle${saved ? ' saved' : ''}`}
+              className={styles.toolButton}
               aria-pressed={saved}
               onClick={onFavorite}
             >
@@ -136,7 +137,7 @@ export function Entry({ entry, priority = false }: EntryProps) {
                 it controls is shown, and aria-controls points at it. */}
             <button
               type="button"
-              className="info-toggle"
+              className={styles.toolButton}
               aria-expanded={expanded}
               aria-controls={explanationId}
               onClick={() => setExpanded(!expanded)}
@@ -146,7 +147,7 @@ export function Entry({ entry, priority = false }: EntryProps) {
             </button>
           </div>
           {entry.credit.length > 0 && (
-            <p className="credit">
+            <p className={styles.credit}>
               <RichText nodes={entry.credit} />
             </p>
           )}
@@ -154,14 +155,14 @@ export function Entry({ entry, priority = false }: EntryProps) {
               accessibility tree. The 2021 version collapsed it with CSS
               (height: 0), which hid it from sight but not from screen
               readers: they read every explanation, open or not. */}
-          <div className="caption-box" id={explanationId} hidden={!expanded}>
+          <div className={styles.explanation} id={explanationId} hidden={!expanded}>
             <p>
               <RichText nodes={entry.explanation} />
             </p>
           </div>
         </div>
       </div>
-      <div className="image-block-right">
+      <div className={styles.right}>
         <DateStamp date={entry.date} />
       </div>
     </article>

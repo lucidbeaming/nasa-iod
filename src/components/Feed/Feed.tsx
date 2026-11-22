@@ -22,6 +22,8 @@ import { ARCHIVE_START } from '../../lib/dates.ts'
 import { feedQuery } from '../../api/queries.ts'
 import { useInView } from '../../hooks/useInView.ts'
 import { Entry } from '../Entry/Entry.tsx'
+import page from '../../styles/page.module.css'
+import styles from './Feed.module.css'
 
 /** The infinite feed of APOD entries, newest first. */
 function Feed() {
@@ -78,8 +80,8 @@ function Feed() {
   }, [nearBottom, hasNextPage, isFetchingNextPage, isFetchNextPageError, fetchNextPage])
 
   return (
-    <div id="main">
-      <div id="main-block">
+    <div className={page.page}>
+      <div>
         {entries.map((entry, i) => (
           // ⚠️ Common mistake (from v0-2021, src/ImageBlock.js):
           //   props.imageList.map((image_item, index) => <Image key={index} … />)
@@ -109,7 +111,7 @@ function Feed() {
         // so it gets an inline message rather than the error boundary.
         // (A failed *first* page has nothing to show; it's thrown to the
         // boundary in FeedBoundary.tsx.) fetchNextPage() retries the page.
-        <div className="iod-error" role="alert">
+        <div className={styles.error} role="alert">
           <p>Couldn’t load earlier pictures: {error?.message}</p>
           <button type="button" onClick={() => void fetchNextPage()}>
             Try again
@@ -118,9 +120,12 @@ function Feed() {
       ) : hasNextPage ? (
         // The loader doubles as the sentinel. It's only rendered while
         // there's more to load, so the observer stops with it.
-        <div ref={sentinelRef} className={`iod-loader${isFetchingNextPage ? ' active' : ''}`}></div>
+        <div
+          ref={sentinelRef}
+          className={isFetchingNextPage ? `${styles.loader} ${styles.loading}` : styles.loader}
+        ></div>
       ) : (
-        <p className="iod-end">
+        <p className={page.notice}>
           You’ve reached the first Astronomy Picture of the Day ({ARCHIVE_START}).
         </p>
       )}

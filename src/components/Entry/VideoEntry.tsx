@@ -14,6 +14,7 @@
  */
 import { useState } from 'react'
 import type { VideoEntry as VideoEntryData } from '../../api/apod.ts'
+import styles from './Media.module.css'
 
 /**
  * Prepares an embed URL for playback after a click: privacy-enhanced
@@ -42,10 +43,10 @@ export function VideoEntry({ entry }: { entry: VideoEntryData }) {
 
   if (!playing) {
     return (
-      <button type="button" className="video-facade" onClick={() => setPlaying(true)}>
+      <button type="button" className={styles.facade} onClick={() => setPlaying(true)}>
         {/* The visible label and the accessible name are the same text, so
             voice-control users can say exactly what they see. */}
-        <span className="video-play" aria-hidden="true">
+        <span className={styles.play} aria-hidden="true">
           ▶
         </span>
         <span>Play video: {entry.title}</span>
@@ -57,7 +58,7 @@ export function VideoEntry({ entry }: { entry: VideoEntryData }) {
     return (
       // A video file plays in the browser's own player; `controls` gives it
       // the standard, keyboard-accessible buttons.
-      <video className="video-frame" src={entry.embedUrl} controls autoPlay>
+      <video className={styles.frame} src={entry.embedUrl} controls autoPlay>
         <a href={entry.embedUrl}>Download the video</a>
       </video>
     )
@@ -65,7 +66,7 @@ export function VideoEntry({ entry }: { entry: VideoEntryData }) {
 
   return (
     <iframe
-      className="video-frame"
+      className={styles.frame}
       src={playerUrl(entry.embedUrl)}
       // Every iframe needs a title: it's how screen readers name the frame.
       title={`Video: ${entry.title}`}

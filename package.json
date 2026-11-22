@@ -13,7 +13,9 @@
     "typecheck": "tsc -b",
     "lint": "oxlint",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages --dist dist --nojekyll"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.108.2",
@@ -33,9 +35,11 @@
     "@vitejs/plugin-react": "^6.3.0",
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "gh-pages": "^6.3.0",
     "oxlint": "^1.94.0",
     "prettier": "^3.10.1",
     "typescript": "~7.0.2",
     "vite": "^8.3.8"
-  }
+  },
+  "homepage": "https://lucidbeaming.github.io/nasa-iod/"
 }

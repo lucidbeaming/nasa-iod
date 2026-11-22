@@ -163,7 +163,12 @@ const Entry = RawEntry.transform((raw): ApodEntry => {
     // Every explanation starts with a bold "Explanation:" label; the UI has
     // its own heading, so the label is removed.
     explanation: parseRichText(raw.explanation.replace(/^\s*<strong>Explanation:<\/strong>/, '')),
-    credit: parseRichText(raw.credit),
+    // Older entries label their credit ("Image Credit & Copyright:"); newer
+    // ones are just names. Add a plain label where there's none, and keep
+    // the original otherwise: "& Copyright" tells readers about reuse.
+    credit: parseRichText(
+      raw.credit && !/^\s*<b>/i.test(raw.credit) ? `<b>Credit:</b> ${raw.credit}` : raw.credit,
+    ),
     permalink: raw.permalink,
   }
 

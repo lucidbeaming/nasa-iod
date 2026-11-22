@@ -4,8 +4,8 @@
  * WHAT: The feed. Reads the archive from TanStack Query, page by page, and
  *       asks for the next page when a sentinel after the last entry comes
  *       near the viewport.
- * WHERE: Rendered by App.tsx inside <FeedBoundary>. Renders
- *        <Imageblock> with the de-duplicated list.
+ * WHERE: Rendered by App.tsx inside <FeedBoundary>. Renders one <Entry>
+ *        per day.
  * CONCEPTS: useSuspenseInfiniteQuery, Suspense, effects that synchronize
  *           with external state, sentinels, live regions
  * READ MORE:
@@ -21,7 +21,7 @@ import { useEffect } from 'react'
 import { ARCHIVE_START } from '../../lib/dates.ts'
 import { feedQuery } from '../../api/queries.ts'
 import { useInView } from '../../hooks/useInView.ts'
-import Imageblock from '../../ImageBlock.tsx'
+import { Entry } from '../Entry/Entry.tsx'
 
 /** Props for {@link Feed}. */
 interface FeedProps {
@@ -85,7 +85,19 @@ function Feed({ setNewFav }: FeedProps) {
 
   return (
     <div id="main">
-      <Imageblock imageList={entries} setNewFav={setNewFav} />
+      <div id="main-block">
+        {entries.map((entry, i) => (
+          // ⚠️ Common mistake (from v0-2021, src/ImageBlock.js):
+          //   props.imageList.map((image_item, index) => <Image key={index} … />)
+          // A key tells React which item is which between renders. An index
+          // describes a *position*, so if items are ever inserted or removed,
+          // React pairs the wrong component state (an expanded caption, a
+          // playing video) with the wrong day. Each APOD has a unique date,
+          // which identifies the *item* (#12). De-duplication by date in
+          // api/queries.ts is what makes it safe to use as the key.
+          <Entry key={entry.date} entry={entry} priority={i === 0} setNewFav={setNewFav} />
+        ))}
+      </div>
 
       {/* 📘 Concept: live regions
           Sighted readers see the spinner; screen reader users need words. An

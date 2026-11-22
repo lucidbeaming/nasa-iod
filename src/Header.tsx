@@ -36,7 +36,7 @@ function Header(props: HeaderProps) {
 
   // localStorage only stores strings, so the favorites list is saved as JSON.
   // JSON.parse returns `any`; annotating it as string[] is a promise to
-  // TypeScript, not a check (see 📘 in types.ts).
+  // TypeScript, not a check (see 📘 parse, don't just type in api/apod.ts).
   const readFavorites = (): string[] | null =>
     JSON.parse(localStorage.getItem('nasaPics') ?? 'null') as string[] | null
 

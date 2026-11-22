@@ -61,6 +61,19 @@ Read in this order:
 
 Try it: `npm run lint` shows a `react-compiler(set-state-in-effect)` warning in `Header.tsx`. That's the 2021 pattern of copying derived data into state inside an effect, which chapter 08 removes.
 
+## Chapter 03: A typed client for the APOD Basic API
+
+NASA moved APOD to science.nasa.gov, and the API the 2021 app used now returns placeholders (#8). This chapter moves to the replacement, NASA's APOD Basic JSON API, behind a client that checks everything it receives.
+
+| File                            | Concepts                                                                                             |
+| ------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `src/lib/dates.ts`              | dates as strings; time zones; `YYMMDD` codes                                                         |
+| `src/api/richText.ts`           | 📘 never render someone else's HTML directly; allow-lists; DOMParser                                 |
+| `src/api/apod.ts`               | 📘 parse, don't just type; 📘 discriminated unions; typed errors; ⚠️ unchecked `res.ok`; AbortSignal |
+| `src/Main.tsx`, `src/Image.tsx` | the same 2021 flow, now fed by the new client                                                        |
+
+Try it: in the browser console of `npm run dev`, run `(await import('/src/api/apod.ts')).fetchApodDay('1995-06-15')` and look at the `ApiError` it throws: status 404, code `apod_basic_not_found`.
+
 ## Target structure
 
 ```

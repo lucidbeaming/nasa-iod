@@ -26,7 +26,7 @@ NASA's [APOD Basic JSON API](https://api.nasa.gov/assets/files/apod/APOD-APIs-an
 
 **When you wouldn't need it:** a throwaway prototype. For anything someone else will read, and a textbook especially, types are documentation the compiler keeps honest.
 
-Remember that types disappear at runtime: see the 📘 in `src/types.ts`, and Zod in chapter 03.
+Remember that types disappear at runtime: see 📘 parse, don't just type in `src/api/apod.ts`, and Zod below.
 
 ### oxlint (`oxlint`)
 
@@ -58,7 +58,13 @@ Remember that types disappear at runtime: see the 📘 in `src/types.ts`, and Zo
 
 ## Runtime validation
 
-_Chapter 03: Zod._
+### Zod (`zod`)
+
+**Why:** API responses are checked when they arrive, and the TypeScript types are inferred from the same schemas, so the check and the type can't drift apart. Schemas also _transform_: `api/apod.ts` turns NASA's flat response into the app's `ApodEntry` union, and its HTML fields into safe RichText. Zod 4 is small, has no dependencies, and gives readable errors (`z.prettifyError`).
+
+**Plain alternative:** hand-written type guards (`function isEntry(x: unknown): x is ApodEntry`). That's fine for one or two shapes, but it means writing every check twice, once as code and once as a type.
+
+**When you wouldn't need it:** when the data comes from code you control and is already typed, such as a typed RPC client generated from the server's schema.
 
 ## Server state
 

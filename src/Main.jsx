@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import Imageblock from "./ImageBlock.js"
+import Imageblock from "./ImageBlock.jsx"
 
-const apiKey = process.env.REACT_APP_NASA_API_KEY
+const apiKey = import.meta.env.VITE_NASA_API_KEY
 
 function useNasaImages(param) {
     const [imageUpdate, setImageUpdate] = useState([])

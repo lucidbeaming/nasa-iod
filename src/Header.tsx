@@ -70,13 +70,19 @@ function Header() {
         <span className="visually-hidden">About this app</span>
       </button>
       <div className={styles.about} id={aboutId} hidden={!aboutOpen}>
+        {/* ⚠️ From v0-2021: "a demonstration of inifinite scrolling", with a
+            link to NASA's Image of the Day gallery. The pictures were always
+            APOD, a different NASA site, and that gallery link now redirects
+            elsewhere. Credit the real source. */}
         <p>
-          This is a demonstration of inifinite scrolling in a React app. The official NASA image of
-          the day site is{' '}
-          <a href="https://www.nasa.gov/multimedia/imagegallery/iotd.html">
-            https://www.nasa.gov/multimedia/imagegallery/iotd.html
-          </a>
-          .
+          An infinite-scrolling feed of the{' '}
+          <a href="https://science.nasa.gov/apod/">Astronomy Picture of the Day</a> (APOD), written
+          and edited by Robert Nemiroff and Jerry Bonnell and published by NASA since June 16, 1995.
+          Each picture is credited to its creators below its title.
+        </p>
+        <p>
+          Built as a textbook example of current React.{' '}
+          <a href="https://github.com/lucidbeaming/nasa-iod">Read the code and tutorial</a>.
         </p>
       </div>
     </header>

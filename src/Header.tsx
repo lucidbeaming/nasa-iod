@@ -60,6 +60,8 @@ function Header(props: HeaderProps) {
   // Re-count favorites whenever App passes a new `newFav`. Copying derived
   // data into state like this is what chapter 08's external store replaces:
   // the count can simply be computed from the store on every render.
+  // The react-compiler/set-state-in-effect lint warning on checkFav() flags
+  // exactly this, and the eslint-disable below makes the compiler skip Header.
   useLayoutEffect(() => {
     checkFav()
     // eslint-disable-next-line react-hooks/exhaustive-deps

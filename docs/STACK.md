@@ -46,7 +46,15 @@ Remember that types disappear at runtime: see the 📘 in `src/types.ts`, and Zo
 
 ## React Compiler
 
-_Chapter 02._
+### React Compiler (`babel-plugin-react-compiler`, `@rolldown/plugin-babel`, `@babel/core`, `eslint-plugin-react-hooks`)
+
+**Why:** it memoizes components, values and callbacks at build time, so the code never needs hand-written `useMemo`, `useCallback` or `memo()`, and their dependency arrays can't go stale. Its lint rules (from `eslint-plugin-react-hooks` 7, loaded into oxlint as a JS plugin under the alias `react-compiler`) report code that breaks the Rules of React, which is also code the compiler refuses to optimize.
+
+**Plain alternative:** memoize by hand where profiling shows a slow render, or not at all. Most apps this size are fast enough without any memoization.
+
+**When you wouldn't need it:** for a small app, the speed gain is modest. It's here because it's how current React is meant to be written, and because its lint rules catch real mistakes. (oxlint's JS plugin support is alpha; if it breaks, drop the `jsPlugins` entry and the `react-compiler/*` rules, and the build is unaffected.)
+
+**Babel vs Rust:** `@vitejs/plugin-react` can also run the compiler's experimental Rust port with `react({ compiler: true })`. This project uses the stable Babel plugin (1.0).
 
 ## Runtime validation
 

@@ -162,6 +162,17 @@ Try it: open `/day/1995-06-16`, the first APOD ever.
 
 Try it: press Tab once on any page. The first stop is "Skip to content". Then use only the keyboard to favorite a picture and open its explanation.
 
+## Chapter 11: Jump to a date with form Actions
+
+| File                                       | Concepts                                                                                                                                                                                                                                                                    |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/components/JumpToDate/JumpToDate.tsx` | 📘 Actions; `useActionState`; `useFormStatus` (and why it lives in a child); validating before the network; `queryClient.fetchQuery` to check and pre-fill the cache; per-call `retry`; form reset and `defaultValue`; `aria-invalid` + `aria-describedby` + `role="alert"` |
+| `src/lib/dates.ts`                         | why `isArchiveDate` isn't a type guard                                                                                                                                                                                                                                      |
+
+This chapter replaces the planned "bring your own API key" form: NASA's new APOD API needs no key. The form teaches the same React 19 features.
+
+Try it: jump to 1995-06-18. That day has no APOD, and the form says so without leaving the page.
+
 ## Target structure
 
 ```

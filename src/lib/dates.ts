@@ -37,9 +37,13 @@ export function todayInArchive(): IsoDate {
 /**
  * True if `date` is a real calendar date within the APOD archive.
  *
+ * Returns a plain boolean, not a type guard (`date is IsoDate`): IsoDate is
+ * only an alias for string, so a guard would tell TypeScript nothing new,
+ * and in the `false` branch it would narrow `date` to `never`.
+ *
  * @param date - a candidate `YYYY-MM-DD` string
  */
-export function isArchiveDate(date: string): date is IsoDate {
+export function isArchiveDate(date: string): boolean {
   const match = ISO_DATE.exec(date)
   if (!match) return false
   const [, y, m, d] = match.map(Number) as [number, number, number, number]

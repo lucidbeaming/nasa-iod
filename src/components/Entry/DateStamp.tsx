@@ -23,10 +23,13 @@ export function DateStamp({ date }: { date: IsoDate }) {
   // nothing to keep in sync: the stamp is a pure function of `date`.
   const d = new Date(date)
   return (
-    // <time dateTime> gives the machine-readable date; aria-label gives
-    // screen readers "November 22, 2026" instead of "NOV 22 2026" read as
-    // three separate words.
-    <time className="calendar-stamp" dateTime={date} aria-label={full.format(d)}>
+    // <time dateTime> gives the machine-readable date. Screen readers get
+    // the full date ("November 22, 2026") from visually hidden text; the
+    // three stamp parts are hidden from them, or they'd hear "NOV 22 2026"
+    // as three separate words. (An aria-label on <time> looks simpler, but
+    // <time> has no role that allows naming, so screen readers may ignore it.)
+    <time className="calendar-stamp" dateTime={date}>
+      <span className="visually-hidden">{full.format(d)}</span>
       <span className="month" aria-hidden="true">
         {month.format(d)}
       </span>

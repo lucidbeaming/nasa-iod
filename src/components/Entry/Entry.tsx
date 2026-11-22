@@ -6,17 +6,19 @@
  *       collapsible explanation, and the date stamp.
  * WHERE: Rendered by components/Feed/Feed.tsx, once per entry.
  * CONCEPTS: rendering a discriminated union, exhaustiveness checking,
- *           composition
- * READ MORE: https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
+ *           composition, toggle and disclosure buttons, useId
+ * READ MORE:
+ *   - https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking
+ *   - https://www.w3.org/WAI/ARIA/apg/patterns/button/
+ *   - https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/
  *
  * Replaces ImageBlock.tsx and Image.tsx (chapters 01–06). The frame is the
  * same for every kind of entry; only the media part differs, so the frame
  * lives here and the media parts are separate components.
  *
- * Still carried over from 2021: the "*" and "?" buttons without accessible
- * names (chapter 10).
+ * Chapter 10 made its controls accessible: see the ⚠️ on the toolbox below.
  */
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { Link } from 'react-router'
 import type { ApodEntry } from '../../api/apod.ts'
 import { useFavorites } from '../../hooks/useFavorites.ts'
@@ -62,13 +64,18 @@ function Media({ entry, priority }: { entry: ApodEntry; priority: boolean }) {
 
 /** One APOD entry: media, title bar, credit, explanation and date. */
 export function Entry({ entry, priority = false }: EntryProps) {
-  // Carried over from 2021 (class-name-as-state); chapter 10 turns this
-  // into a boolean with aria-expanded.
-  const [collapsed, setCollapsed] = useState(' collapsed')
+  // Whether the explanation is open. A boolean, not the 2021 class-name
+  // string (" collapsed"): one fact drives both the `hidden` attribute and
+  // aria-expanded, so the two can't disagree.
+  const [expanded, setExpanded] = useState(false)
 
-  const toggleAbout = () => {
-    setCollapsed(collapsed === ' collapsed' ? '' : ' collapsed')
-  }
+  // useId generates an id that's unique in the page (and stable between
+  // renders), for attributes that point at other elements: aria-controls,
+  // aria-labelledby. Hand-written ids would collide, since the feed renders
+  // this component many times.
+  const id = useId()
+  const titleId = `${id}-title`
+  const explanationId = `${id}-explanation`
 
   // Saved or not is read from the store, never copied into local state, so
   // every entry, the header and other tabs always agree.
@@ -87,23 +94,55 @@ export function Entry({ entry, priority = false }: EntryProps) {
 
   return (
     // <article> marks a self-contained item in a feed; screen reader users
-    // can jump from one article to the next.
-    <article className={`image-block entry-${entry.kind}`}>
+    // can jump from one article to the next. aria-labelledby names it after
+    // its title, so that jump announces which picture it is.
+    <article className={`image-block entry-${entry.kind}`} aria-labelledby={titleId}>
       <div className="image-block-left">&nbsp;</div>
       <div className="image-block-inner">
         <Media entry={entry} priority={priority} />
         <div className="title-bar">
           {/* The title links to the day's permalink (/day/:date). */}
-          <h3>
+          <h3 id={titleId}>
             <Link to={`/day/${entry.date}`}>{entry.title}</Link>
           </h3>
+          {/* ⚠️ Common mistake (from v0-2021, src/Image.js):
+                <button className="fav-toggle">*</button>
+                <button className="info-toggle">?</button>
+              A screen reader announces these as "star, button" and
+              "question mark, button": no hint of what they do or whether
+              they're on (#12). An icon button needs a text name, and a button
+              that switches something on and off needs to expose its state. */}
           <div className="toolbox">
-            <span className="fav-message">{savedFav}</span>
-            <button className={`fav-toggle${saved ? ' saved' : ''}`} onClick={onFavorite}>
-              *
+            {/* role="status" makes this a polite live region: the
+                confirmation is announced without moving focus. */}
+            <span className="fav-message" role="status">
+              {savedFav}
+            </span>
+            {/* A *toggle button*: the name stays "Favorite", and
+                aria-pressed says whether it's on. Changing the label instead
+                ("Save" / "Unsave") would make the state hard to tell apart
+                from the action. The star is decoration; the name comes from
+                the visually hidden text. */}
+            <button
+              type="button"
+              className={`fav-toggle${saved ? ' saved' : ''}`}
+              aria-pressed={saved}
+              onClick={onFavorite}
+            >
+              <span aria-hidden="true">{saved ? '★' : '☆'}</span>
+              <span className="visually-hidden">Favorite</span>
             </button>
-            <button className="info-toggle" onClick={toggleAbout}>
-              ?
+            {/* A *disclosure button*: aria-expanded says whether the content
+                it controls is shown, and aria-controls points at it. */}
+            <button
+              type="button"
+              className="info-toggle"
+              aria-expanded={expanded}
+              aria-controls={explanationId}
+              onClick={() => setExpanded(!expanded)}
+            >
+              <span aria-hidden="true">?</span>
+              <span className="visually-hidden">Explanation</span>
             </button>
           </div>
           {entry.credit.length > 0 && (
@@ -111,7 +150,11 @@ export function Entry({ entry, priority = false }: EntryProps) {
               <RichText nodes={entry.credit} />
             </p>
           )}
-          <div className={`caption-box${collapsed}`}>
+          {/* `hidden` removes the explanation from the page *and* from the
+              accessibility tree. The 2021 version collapsed it with CSS
+              (height: 0), which hid it from sight but not from screen
+              readers: they read every explanation, open or not. */}
+          <div className="caption-box" id={explanationId} hidden={!expanded}>
             <p>
               <RichText nodes={entry.explanation} />
             </p>

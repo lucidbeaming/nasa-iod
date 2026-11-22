@@ -81,6 +81,9 @@ export function ImageEntry({ entry, priority = false }: ImageEntryProps) {
         onLoad={() => setStatus('loaded')}
         onError={() => setStatus('failed')}
       />
+      {/* The link's name is the image's alt text; this adds where it goes.
+          Links that open a new tab should say so (WCAG 3.2.5). */}
+      <span className="visually-hidden"> (full-size image, opens in a new tab)</span>
     </a>
   )
 }

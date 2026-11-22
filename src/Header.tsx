@@ -11,24 +11,16 @@
  * chapter 09 the title links home and "SHOW" links to the favorites page
  * (in 2021 it only logged the saved dates to the console).
  */
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { Link } from 'react-router'
 import { useFavorites } from './hooks/useFavorites.ts'
 
 /** Page header with the favorites count and the about panel. */
 function Header() {
-  // The class-name-as-state pattern: " collapsed" or "". Chapter 10 replaces
-  // it with a boolean plus aria-expanded, which is what assistive technology
-  // needs to announce the panel's state.
-  const [collapsed, setCollapsed] = useState(' collapsed')
-
-  const toggleAbout = () => {
-    if (collapsed !== ' collapsed') {
-      setCollapsed(' collapsed')
-    } else {
-      setCollapsed('')
-    }
-  }
+  // Whether the about panel is open (a disclosure, like the explanation
+  // toggle in Entry.tsx).
+  const [aboutOpen, setAboutOpen] = useState(false)
+  const aboutId = useId()
 
   const favorites = useFavorites()
 
@@ -55,14 +47,25 @@ function Header() {
         {/* <Link> renders a real <a href>, so it works with the keyboard,
             middle-click and "open in new tab", but navigates without a page
             load. (A button that calls navigate() would lose all of that.) */}
-        <Link className={favorites.length ? '' : 'hidden'} to="/favorites">
-          SHOW
-        </Link>
+        {favorites.length > 0 && (
+          // Removed rather than made invisible when there's nothing to show:
+          // the 2021 `visibility: hidden` kept an empty target in the layout.
+          <Link to="/favorites">
+            SHOW<span className="visually-hidden"> favorites</span>
+          </Link>
+        )}
       </p>
-      <button className="iod-link" onClick={toggleAbout}>
-        ?
+      <button
+        type="button"
+        className="iod-link"
+        aria-expanded={aboutOpen}
+        aria-controls={aboutId}
+        onClick={() => setAboutOpen(!aboutOpen)}
+      >
+        <span aria-hidden="true">?</span>
+        <span className="visually-hidden">About this app</span>
       </button>
-      <div className={`app-info${collapsed}`}>
+      <div className="app-info" id={aboutId} hidden={!aboutOpen}>
         <p>
           This is a demonstration of inifinite scrolling in a React app. The official NASA image of
           the day site is{' '}

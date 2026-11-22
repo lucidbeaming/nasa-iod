@@ -23,14 +23,8 @@ import { feedQuery } from '../../api/queries.ts'
 import { useInView } from '../../hooks/useInView.ts'
 import { Entry } from '../Entry/Entry.tsx'
 
-/** Props for {@link Feed}. */
-interface FeedProps {
-  /** Reports the new favorites count up to App. */
-  setNewFav: (count: number) => void
-}
-
 /** The infinite feed of APOD entries, newest first. */
-function Feed({ setNewFav }: FeedProps) {
+function Feed() {
   // 📘 Concept: Suspense (see FeedBoundary.tsx for the full picture)
   // The "suspense" version of the hook never returns while the first page is
   // loading. It suspends instead, and React shows the nearest <Suspense
@@ -95,7 +89,7 @@ function Feed({ setNewFav }: FeedProps) {
           // playing video) with the wrong day. Each APOD has a unique date,
           // which identifies the *item* (#12). De-duplication by date in
           // api/queries.ts is what makes it safe to use as the key.
-          <Entry key={entry.date} entry={entry} priority={i === 0} setNewFav={setNewFav} />
+          <Entry key={entry.date} entry={entry} priority={i === 0} />
         ))}
       </div>
 

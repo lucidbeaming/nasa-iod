@@ -4,8 +4,8 @@
  * WHAT: The API client. Fetches Astronomy Pictures of the Day from NASA's
  *       APOD Basic API, checks every response, and converts it into the
  *       app's own `ApodEntry` type.
- * WHERE: The only file that talks to the network. Chapter 04 calls it from
- *        TanStack Query; until then Main.tsx calls it directly.
+ * WHERE: The only file that talks to the network. Called by the query
+ *        functions in api/queries.ts.
  * CONCEPTS: parsing at the boundary, Zod schemas, discriminated unions,
  *           typed errors, AbortSignal
  * READ MORE:

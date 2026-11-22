@@ -3,29 +3,30 @@
  *
  * WHAT: The root component. Holds the page layout and decides when the feed
  *       should load more pictures, by watching the scroll position.
- * WHERE: Rendered by index.tsx. Renders <Header> and <Main>.
- * CONCEPTS: useState, useLayoutEffect, event listeners in effects, lifting state up
+ * WHERE: Rendered by main.tsx. Renders <Header> and <Feed>.
+ * CONCEPTS: useState, useLayoutEffect, event listeners in effects, lifting
+ *           state up, a Suspense boundary
  * READ MORE:
  *   - https://react.dev/reference/react/useLayoutEffect
  *   - https://react.dev/learn/sharing-state-between-components
  *
- * This is the 2021 logic ported to TypeScript without behavior changes.
- * It has known bugs (#10), which chapters 04 and 05 fix by replacing it.
+ * The scroll detection is still the 2021 logic, with a known bug (#10) that
+ * chapter 05 fixes by replacing it. Fetching moved into <Feed> in chapter 04.
  */
-import { useLayoutEffect, useState } from 'react'
+import { Suspense, useLayoutEffect, useState } from 'react'
 import './App.css'
 import Header from './Header.tsx'
-import Main from './Main.tsx'
+import Feed from './components/Feed/Feed.tsx'
 
 /** Root component: layout plus scroll detection for the infinite feed. */
 function App() {
   // `triggered` is true while the bottom of the page is near the viewport,
-  // which tells <Main> to fetch the next week of pictures.
+  // which tells <Feed> to fetch the next page of pictures.
   const [triggered, setTriggered] = useState(false)
   const [winHeight, setWinHeight] = useState(window.innerHeight)
 
   // `newFav` is the number of saved favorites. It lives here, in the closest
-  // common parent of <Header> (which displays the count) and <Main> (whose
+  // common parent of <Header> (which displays the count) and <Feed> (whose
   // images change it). This is "lifting state up".
   const [newFav, setNewFav] = useState(0)
 
@@ -73,7 +74,12 @@ function App() {
   return (
     <div id="iod">
       <Header newFav={newFav} />
-      <Main triggered={triggered} setNewFav={setNewFav} />
+      {/* <Feed> suspends until its first page arrives (see 📘 Suspense in
+          Feed.tsx); until then React shows this fallback, the same loader
+          the 2021 app used. Chapter 06 adds a skeleton and error handling. */}
+      <Suspense fallback={<div className="iod-loader active"></div>}>
+        <Feed triggered={triggered} setNewFav={setNewFav} />
+      </Suspense>
     </div>
   )
 }

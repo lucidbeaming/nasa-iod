@@ -74,6 +74,19 @@ NASA moved APOD to science.nasa.gov, and the API the 2021 app used now returns p
 
 Try it: in the browser console of `npm run dev`, run `(await import('/src/api/apod.ts')).fetchApodDay('1995-06-15')` and look at the `ApiError` it throws: status 404, code `apod_basic_not_found`.
 
+## Chapter 04: TanStack Query
+
+| File                           | Concepts                                                                                                                                                             |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/api/queries.ts`           | 📘 server state is not component state; query keys; `infiniteQueryOptions`; `getNextPageParam` and the end of the archive; `select` and de-duplication; retry policy |
+| `src/main.tsx`                 | 📘 providers; one QueryClient per app                                                                                                                                |
+| `src/components/Feed/Feed.tsx` | `useSuspenseInfiniteQuery`; 📘 Suspense (first look); an effect that knows when to stop (⚠️ the request loop)                                                        |
+| `src/App.tsx`                  | a `<Suspense>` boundary                                                                                                                                              |
+
+Compare `Feed.tsx` with the deleted `Main.tsx` (`git diff chapter-03 chapter-04 -- src/Main.tsx src/components/Feed/Feed.tsx`).
+
+The ⚠️ in `Feed.tsx` is a real mistake made while writing this chapter. A test of a failed page caught it: the first version re-requested a failed page in a tight loop.
+
 ## Target structure
 
 ```

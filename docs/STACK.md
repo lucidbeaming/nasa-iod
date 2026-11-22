@@ -68,7 +68,15 @@ Remember that types disappear at runtime: see 📘 parse, don't just type in `sr
 
 ## Server state
 
-_Chapter 04: TanStack Query._
+### TanStack Query (`@tanstack/react-query`)
+
+**Why:** the feed is server state: NASA owns it, it can fail or go stale, and it arrives in pages. TanStack Query caches it per query key, gives each fetch an `AbortSignal`, de-duplicates concurrent requests, retries failures by a policy (here: never on 4xx), and tracks loading, paging and error status consistently. `useSuspenseInfiniteQuery` handles the paging, and `hasNextPage` handles the end of the archive. The 2021 app's two worst bugs (#9, #10) were hand-rolled versions of exactly this.
+
+**Plain alternative:** `useEffect` + `useState` + `fetch`, with your own abort handling, de-duplication, retries and cache. React's own `use()` can read a promise, but you still have to cache that promise yourself. Feasible for one request; a lot of subtle code for paging.
+
+**When you wouldn't need it:** if the data comes from a framework loader (React Router framework mode, Next.js server components), the framework does the fetching. Or when there's a single request with no paging or refetching.
+
+The devtools (`@tanstack/react-query-devtools`) are worth adding while developing; they're left out here to keep the dependency list short.
 
 ## Error boundaries
 

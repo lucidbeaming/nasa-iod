@@ -395,3 +395,19 @@
   background-color: #7686b7;
   color: #fff;
 }
+
+/* Routing (chapter 09). Restyled with the rest in chapter 12. */
+.iod-header h1 a,
+.title-bar h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.iod-header h1 a:hover,
+.title-bar h3 a:hover {
+  text-decoration: underline;
+}
+
+.page-title {
+  margin: 0 0 2rem 10vw;
+}

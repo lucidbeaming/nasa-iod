@@ -1,32 +1,29 @@
 /**
  * src/App.tsx
  *
- * WHAT: The root component: the page layout.
- * WHERE: Rendered by main.tsx. Renders <Header> and <Feed>.
- * CONCEPTS: where to put boundaries
- * READ MORE: https://react.dev/reference/react/Suspense
+ * WHAT: The layout shared by every page: the header, and the current page
+ *       below it.
+ * WHERE: The layout route in main.tsx. Each page renders in its <Outlet>.
+ * CONCEPTS: layout routes, <Outlet>
+ * READ MORE: https://reactrouter.com/start/declarative/routing#layouts
  *
  * Until chapter 05 this file also watched the scroll position (that moved
- * to hooks/useInView.ts), and until chapter 08 it held the favorites count,
- * "lifted up" so Header and the feed could share it. A shared store
- * (lib/favorites.ts) replaced that: each component reads what it needs.
+ * to hooks/useInView.ts); until chapter 08 it held the favorites count
+ * (that moved to a store, lib/favorites.ts); and until chapter 09 it
+ * rendered the feed directly (that's pages/FeedPage.tsx now).
  */
+import { Outlet } from 'react-router'
 import './App.css'
 import Header from './Header.tsx'
-import Feed from './components/Feed/Feed.tsx'
-import { FeedBoundary } from './components/Feed/FeedBoundary.tsx'
 
-/** Root component: header and feed. */
+/** Layout: header plus the matched page. */
 function App() {
   return (
     <div id="iod">
       <Header />
-      {/* Loading and error handling for the feed only (see 📘 in
-          FeedBoundary.tsx): if NASA's service is down, the header still
-          works. */}
-      <FeedBoundary>
-        <Feed />
-      </FeedBoundary>
+      {/* <Outlet> is where the matched child route renders: the feed at
+          "/", the favorites page at "/favorites", and so on. */}
+      <Outlet />
     </div>
   )
 }

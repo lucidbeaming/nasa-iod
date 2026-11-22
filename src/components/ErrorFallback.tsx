@@ -3,8 +3,8 @@
  *
  * WHAT: What the reader sees when a section of the page fails to load: a
  *       plain-language message and a Retry button.
- * WHERE: Rendered by the <ErrorBoundary> in components/Feed/FeedBoundary.tsx
- *        (and, from chapter 09, around each page).
+ * WHERE: Rendered by the <ErrorBoundary> in components/Feed/FeedBoundary.tsx,
+ *        which wraps the feed, the day page and each pending favorite.
  * CONCEPTS: error boundaries, narrowing `unknown`, recoverable errors
  * READ MORE:
  *   - https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary
@@ -53,15 +53,21 @@ function describe(error: unknown): { title: string; detail: string } {
  */
 export function ErrorFallback({ error, resetErrorBoundary }: FallbackProps) {
   const { title, detail } = describe(error)
+  // A 4xx answer (such as "no picture for that day") will be the same next
+  // time, so offering to retry would only invite a pointless click. The
+  // query's retry policy makes the same distinction (api/queries.ts).
+  const retryable = !(error instanceof ApiError && error.isClientError)
   return (
     // role="alert" makes screen readers announce the message as soon as it
     // appears, since it replaces content the reader was waiting for.
     <div className="iod-error" role="alert">
       <h2>{title}</h2>
       <p>{detail}</p>
-      <button type="button" onClick={() => resetErrorBoundary()}>
-        Try again
-      </button>
+      {retryable && (
+        <button type="button" onClick={() => resetErrorBoundary()}>
+          Try again
+        </button>
+      )}
     </div>
   )
 }

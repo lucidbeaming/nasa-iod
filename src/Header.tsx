@@ -7,11 +7,12 @@
  * CONCEPTS: reading an external store, deriving values during render
  * READ MORE: https://react.dev/learn/you-might-not-need-an-effect
  *
- * Since chapter 08 the count comes straight from the favorites store.
- * "SHOW" still only logs the saved dates to the console; chapter 09 turns
- * it into a link to a favorites page.
+ * Since chapter 08 the count comes straight from the favorites store. Since
+ * chapter 09 the title links home and "SHOW" links to the favorites page
+ * (in 2021 it only logged the saved dates to the console).
  */
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { useFavorites } from './hooks/useFavorites.ts'
 
 /** Page header with the favorites count and the about panel. */
@@ -44,20 +45,19 @@ function Header() {
       ? 'No favorites saved yet'
       : `${favorites.length} favorite${favorites.length > 1 ? 's' : ''} saved`
 
-  const showFavs = () => {
-    favorites.forEach((item) => {
-      console.log(item.date)
-    })
-  }
-
   return (
     <header className="iod-header">
-      <h1>NASA Image of the Day</h1>
+      <h1>
+        <Link to="/">NASA Image of the Day</Link>
+      </h1>
       <p>
         {favoriteCount}{' '}
-        <button className={favorites.length ? '' : 'hidden'} onClick={showFavs}>
+        {/* <Link> renders a real <a href>, so it works with the keyboard,
+            middle-click and "open in new tab", but navigates without a page
+            load. (A button that calls navigate() would lose all of that.) */}
+        <Link className={favorites.length ? '' : 'hidden'} to="/favorites">
           SHOW
-        </button>
+        </Link>
       </p>
       <button className="iod-link" onClick={toggleAbout}>
         ?

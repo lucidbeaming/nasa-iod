@@ -389,3 +389,9 @@
   text-align: center;
   background: #eee;
 }
+
+/* A saved favorite (chapter 08). */
+.fav-toggle.saved {
+  background-color: #7686b7;
+  color: #fff;
+}

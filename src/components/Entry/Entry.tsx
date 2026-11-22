@@ -13,12 +13,13 @@
  * same for every kind of entry; only the media part differs, so the frame
  * lives here and the media parts are separate components.
  *
- * Still carried over from 2021: favorites as a date list in localStorage
- * (chapter 08 replaces it with a shared store) and the "*" and "?" buttons
- * without accessible names (chapter 10).
+ * Still carried over from 2021: the "*" and "?" buttons without accessible
+ * names (chapter 10).
  */
 import { useState } from 'react'
 import type { ApodEntry } from '../../api/apod.ts'
+import { useFavorites } from '../../hooks/useFavorites.ts'
+import { isFavorite, toggleFavorite } from '../../lib/favorites.ts'
 import { DateStamp } from './DateStamp.tsx'
 import { ImageEntry } from './ImageEntry.tsx'
 import { LinkEntry } from './LinkEntry.tsx'
@@ -30,8 +31,6 @@ interface EntryProps {
   entry: ApodEntry
   /** True for the first entry, whose image should load immediately. */
   priority?: boolean
-  /** Reports the new favorites count up to App. */
-  setNewFav: (count: number) => void
 }
 
 /**
@@ -61,33 +60,28 @@ function Media({ entry, priority }: { entry: ApodEntry; priority: boolean }) {
 }
 
 /** One APOD entry: media, title bar, credit, explanation and date. */
-export function Entry({ entry, priority = false, setNewFav }: EntryProps) {
+export function Entry({ entry, priority = false }: EntryProps) {
   // Carried over from 2021 (class-name-as-state); chapter 10 turns this
   // into a boolean with aria-expanded.
   const [collapsed, setCollapsed] = useState(' collapsed')
-  const [savedFav, setSavedFav] = useState('')
 
   const toggleAbout = () => {
     setCollapsed(collapsed === ' collapsed' ? '' : ' collapsed')
   }
 
-  // Carried over from 2021; chapter 08 replaces it with a favorites store.
-  const setFavorite = (date: string) => {
-    let favArr = JSON.parse(localStorage.getItem('nasaPics') ?? 'null') as string[] | null
-    if (favArr !== null) {
-      if (favArr.indexOf(date) === -1) {
-        favArr.push(date)
-        setNewFav(favArr.length)
-        setSavedFav('Saved in favorites')
-      } else {
-        setSavedFav('Already saved')
-      }
-    } else {
-      favArr = [date]
-      setNewFav(favArr.length)
-      setSavedFav('Your first favorite!')
-    }
-    localStorage.setItem('nasaPics', JSON.stringify(favArr))
+  // Saved or not is read from the store, never copied into local state, so
+  // every entry, the header and other tabs always agree.
+  const saved = isFavorite(useFavorites(), entry.date)
+
+  // A short confirmation after the button is pressed. This *is* local UI
+  // state: it describes what this button just did, not the saved data.
+  const [savedFav, setSavedFav] = useState('')
+
+  // The 2021 button could only add ("Already saved" on a second press). It
+  // now toggles, since the store makes removing as easy as adding.
+  const onFavorite = () => {
+    const nowSaved = toggleFavorite(entry)
+    setSavedFav(nowSaved ? 'Saved in favorites' : 'Removed from favorites')
   }
 
   return (
@@ -101,7 +95,7 @@ export function Entry({ entry, priority = false, setNewFav }: EntryProps) {
           <h3>{entry.title}</h3>
           <div className="toolbox">
             <span className="fav-message">{savedFav}</span>
-            <button className="fav-toggle" onClick={() => setFavorite(entry.date)}>
+            <button className={`fav-toggle${saved ? ' saved' : ''}`} onClick={onFavorite}>
               *
             </button>
             <button className="info-toggle" onClick={toggleAbout}>

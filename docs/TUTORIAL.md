@@ -122,6 +122,17 @@ Try it: in the dev tools' Network panel, set throttling to "Offline" and reload.
 
 Try it: open the Network panel and scroll past a video day. No request goes to YouTube until you press Play.
 
+## Chapter 08: Favorites with useSyncExternalStore
+
+| File                             | Concepts                                                                                                                                                                                                             |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/lib/favorites.ts`           | 📘 an external store; ⚠️ the 2021 prop-callback chain; ⚠️ uncached snapshots; validating localStorage with Zod (recursive schemas with `z.lazy`); 📘 data migrations; the `storage` event; never mutating a snapshot |
+| `src/hooks/useFavorites.ts`      | `useSyncExternalStore`; tearing                                                                                                                                                                                      |
+| `src/Header.tsx`                 | ⚠️ derived data copied into state by an effect, replaced by computing it during render                                                                                                                               |
+| `src/components/Entry/Entry.tsx` | store data vs local UI state                                                                                                                                                                                         |
+
+Try it: open the app in two tabs and favorite a picture in one. The count updates in both.
+
 ## Target structure
 
 ```

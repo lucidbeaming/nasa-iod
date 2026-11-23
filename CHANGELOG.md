@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [Unreleased]
+
+## [1.0.1] - 2026-11-23
+
+### Changed
+
+- Relicensed from GPL-3.0 to MIT; release 1.0.0 keeps GPL-3.0 (#47)
+
 ## [1.0.0] - 2026-11-22
 
 The textbook rewrite of the 2021 exercise, in 16 chapters. Each is one pull request and one tag (`chapter-00` … `chapter-15`); see [docs/TUTORIAL.md](docs/TUTORIAL.md).

@@ -77,4 +77,4 @@ This project is not affiliated with NASA.
 
 ## License
 
-[GPL-3.0](LICENSE). The license covers this code, not the APOD images and text, which belong to their credited owners.
+[MIT](LICENSE). Release 1.0.0 was published under GPL-3.0, and those copies keep that license. The license covers this code, not the APOD images and text, which belong to their credited owners.

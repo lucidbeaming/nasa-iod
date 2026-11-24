@@ -3,6 +3,8 @@ node_modules/
 
 # Build output
 dist/
+dist-site/
+nasa-iod-site-*.zip*
 *.tsbuildinfo
 
 # Environment (VITE_* values are bundled into the client and are never secret)

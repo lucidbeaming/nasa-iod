@@ -27,7 +27,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "predeploy": "npm run build",
-    "deploy": "gh-pages --dist dist --nojekyll"
+    "deploy": "gh-pages --dist dist --nojekyll",
+    "deploy:redirect": "gh-pages --dist pages-redirect --nojekyll"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.108.2",
@@ -53,5 +54,5 @@
     "typescript": "~7.0.2",
     "vite": "^8.3.8"
   },
-  "homepage": "https://lucidbeaming.github.io/nasa-iod/"
+  "homepage": "https://joshuacurry.dev/react/nasa-iod"
 }

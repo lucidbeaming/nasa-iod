@@ -104,7 +104,7 @@ Version 8 requires Node 22.22+ to install (`engines.node`).
 
 ### gh-pages (`gh-pages`)
 
-**Why:** `npm run deploy` builds the app and pushes `dist/` to the repository's `gh-pages` branch, which GitHub Pages serves at https://lucidbeaming.github.io/nasa-iod/. No CI workflow is needed, and deploying is a deliberate local step.
+**Why:** `npm run deploy` builds the app and pushes `dist/` to the repository's `gh-pages` branch, which GitHub Pages serves at https://lucidbeaming.github.io/nasa-iod/. No CI workflow is needed, and deploying is a deliberate local step. The live demo has since moved to https://joshuacurry.dev/react/nasa-iod; `npm run deploy:redirect` replaces the Pages site with a page that forwards there.
 
 **Plain alternative:** a GitHub Actions workflow using `actions/deploy-pages`, which deploys on every push to `main`. Or commit `dist/` to a `docs/` folder and point Pages at it (it mixes build output into the source history).
 

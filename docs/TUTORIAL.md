@@ -212,7 +212,7 @@ A content fix, not a code lesson. `src/Header.tsx`'s about panel credited NASA's
 | `package.json`   | `predeploy`/`deploy` scripts with `gh-pages`; `homepage`                                                                              |
 | `src/main.tsx`   | how `basename` follows `import.meta.env.BASE_URL`                                                                                     |
 
-Deploy with `npm run deploy`. The live demo is at https://lucidbeaming.github.io/nasa-iod/.
+Deploy with `npm run deploy`. The live demo has since moved to https://joshuacurry.dev/react/nasa-iod (`npm run build:site`), and the GitHub Pages address forwards there (`npm run deploy:redirect`).
 
 ## Chapter 15: Tutorial docs and README
 

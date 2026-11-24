@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Changed
+
+- The live demo moved to https://joshuacurry.dev/react/nasa-iod; the GitHub Pages address forwards there, keeping the path (`npm run deploy:redirect`) (#55)
+
 ## [1.1.1] - 2026-11-23
 
 Fixes the blank page at joshuacurry.dev/react/nasa-iod: the router now matches the app folder URL with or without a trailing slash. `nasa-iod-site-1.1.1.zip` is the updated site build.

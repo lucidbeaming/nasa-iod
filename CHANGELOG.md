@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-11-23
+
+The live demo moved to [joshuacurry.dev/react/nasa-iod](https://joshuacurry.dev/react/nasa-iod), and the GitHub Pages address forwards there. The app is unchanged from 1.1.1, so `nasa-iod-site-1.1.2.zip` is the same build under a new name.
+
 ### Changed
 
 - The live demo moved to https://joshuacurry.dev/react/nasa-iod; the GitHub Pages address forwards there, keeping the path (`npm run deploy:redirect`) (#55)
@@ -68,6 +72,7 @@ The textbook rewrite of the 2021 exercise, in 16 chapters. Each is one pull requ
 
 The original coding exercise: tag [`v0-2021`](https://github.com/lucidbeaming/nasa-iod/tree/v0-2021).
 
-[Unreleased]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.1...HEAD
+[Unreleased]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.1...v1.1.2
 [1.1.1]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/lucidbeaming/nasa-iod/compare/v1.0.1...v1.1.0

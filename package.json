@@ -1,7 +1,7 @@
 {
   "name": "nasa-iod",
   "private": true,
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Textbook React 19 example: a fully commented, infinite-scrolling NASA Astronomy Picture of the Day viewer",
   "license": "MIT",
   "author": "Joshua Curry (https://github.com/lucidbeaming)",

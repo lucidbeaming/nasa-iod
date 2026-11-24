@@ -1,21 +1,32 @@
 <!doctype html>
+<!--
+  The live demo moved from GitHub Pages to joshuacurry.dev. GitHub Pages can't
+  send real redirects, so this page (published as both index.html and
+  404.html by `npm run deploy:redirect`) points search engines at the new URL
+  with a canonical link, and sends visitors there with a meta refresh. The
+  script keeps the path, so an old deep link such as /nasa-iod/day/2026-11-01
+  opens the same day at /react/nasa-iod/day/2026-11-01.
+-->
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/nasa-iod/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <!-- Each page renders its own <title> and <meta name="description">
-         (React 19 document metadata, see src/pages/FeedPage.tsx). React puts
-         its <title> ahead of this one, so this one only shows until the app
-         loads. There's deliberately no static description: React would add
-         its own *after* it, and link previews read the first. -->
-    <title>NASA Image of the Day</title>
-    <script type="module" crossorigin src="/nasa-iod/assets/index-DjlsKJuH.js"></script>
-    <link rel="stylesheet" crossorigin href="/nasa-iod/assets/index-BwFpXMUy.css">
+    <title>NASA Image of the Day has moved</title>
+    <link rel="canonical" href="https://joshuacurry.dev/react/nasa-iod" />
+    <meta http-equiv="refresh" content="0; url=https://joshuacurry.dev/react/nasa-iod" />
+    <script>
+      location.replace(
+        'https://joshuacurry.dev/react/nasa-iod' +
+          location.pathname.replace(/^\/nasa-iod\/?/, '/').replace(/\/$/, '') +
+          location.search +
+          location.hash,
+      )
+    </script>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <p>
+      NASA Image of the Day has moved to
+      <a href="https://joshuacurry.dev/react/nasa-iod">joshuacurry.dev/react/nasa-iod</a>.
+    </p>
   </body>
 </html>

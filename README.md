@@ -58,14 +58,18 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
-| Script                            |                                                               |
-| --------------------------------- | ------------------------------------------------------------- |
-| `npm run dev`                     | dev server with Fast Refresh                                  |
-| `npm run build`                   | type-check (`tsc -b`) and build to `dist/`                    |
-| `npm run preview`                 | serve the build locally                                       |
-| `npm run lint`                    | oxlint                                                        |
-| `npm run format` / `format:check` | Prettier                                                      |
-| `npm run deploy`                  | build and publish `dist/` to GitHub Pages (`gh-pages` branch) |
+| Script                            |                                                                              |
+| --------------------------------- | ---------------------------------------------------------------------------- |
+| `npm run dev`                     | dev server with Fast Refresh                                                 |
+| `npm run build`                   | type-check (`tsc -b`) and build to `dist/`                                   |
+| `npm run preview`                 | serve the build locally                                                      |
+| `npm run lint`                    | oxlint                                                                       |
+| `npm run format` / `format:check` | Prettier                                                                     |
+| `npm run deploy`                  | build and publish `dist/` to GitHub Pages (`gh-pages` branch)                |
+| `npm run build:site`              | build the copy served at joshuacurry.dev/react/nasa-iod to `dist-site/`      |
+| `npm run package:site`            | `build:site`, then zip `dist-site/` with a SHA-256 checksum, for the release |
+
+`build:site` is the same app with the base path `/react/nasa-iod/`. It skips the GitHub Pages `404.html` copy, since joshuacurry.dev answers deep links itself, and adds a canonical URL and Open Graph tags for link previews (see `vite.config.ts`). Each release attaches its `nasa-iod-site-<version>.zip`, and the site deploys that file, never building the app itself.
 
 ## Data and credits
 

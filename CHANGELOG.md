@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Added
+
+- `npm run build:site` and `npm run package:site`: a copy of the app for joshuacurry.dev/react/nasa-iod, with a canonical URL, Open Graph tags and a preview image, zipped with a checksum for each release (#49)
+
 ## [1.0.1] - 2026-11-23
 
 ### Changed

@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-23
+
+Adds a build of the app for joshuacurry.dev/react/nasa-iod. `nasa-iod-site-1.1.0.zip` (with its SHA-256 checksum) is that build, ready to serve from `/react/nasa-iod/`. The GitHub Pages demo is unchanged.
+
 ### Added
 
 - `npm run build:site` and `npm run package:site`: a copy of the app for joshuacurry.dev/react/nasa-iod, with a canonical URL, Open Graph tags and a preview image, zipped with a checksum for each release (#49)
@@ -51,3 +55,6 @@ The textbook rewrite of the 2021 exercise, in 16 chapters. Each is one pull requ
 ## [0-2021]
 
 The original coding exercise: tag [`v0-2021`](https://github.com/lucidbeaming/nasa-iod/tree/v0-2021).
+
+[Unreleased]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/lucidbeaming/nasa-iod/compare/v1.0.1...v1.1.0

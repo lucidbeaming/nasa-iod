@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+### Fixed
+
+- The app no longer stays blank at its folder URL without a trailing slash, such as joshuacurry.dev/react/nasa-iod (#52)
+
 ## [1.1.0] - 2026-11-23
 
 Adds a build of the app for joshuacurry.dev/react/nasa-iod. `nasa-iod-site-1.1.0.zip` (with its SHA-256 checksum) is that build, ready to serve from `/react/nasa-iod/`. The GitHub Pages demo is unchanged.

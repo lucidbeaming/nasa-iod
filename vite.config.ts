@@ -45,14 +45,58 @@ function spaFallback(): Plugin {
   }
 }
 
+// The copy of the app served by joshuacurry.dev (`npm run build:site`).
+const SITE_URL = 'https://joshuacurry.dev/react/nasa-iod'
+const SITE_DESCRIPTION =
+  "NASA's Astronomy Picture of the Day as an infinite scroll, with favorites, permalinks and dark mode. A fully commented React 19 example."
+
+/**
+ * Adds link-preview and search tags to the built index.html.
+ *
+ * Each page renders its own <title> and description at runtime (see the
+ * note in index.html), but crawlers and link previews often read only the
+ * HTML the server sends. So this adds just the tags React never renders: the
+ * canonical URL and the Open Graph tags that chat apps and social sites use
+ * for previews. Only the landing page matters here: inner pages share this
+ * same file, and their own titles appear once the app runs.
+ *
+ * `transformIndexHtml` returns tags for Vite to inject into <head>.
+ */
+function siteMeta(): Plugin {
+  // injectTo 'head' appends to <head>, after <meta charset> and <title>.
+  const og = (property: string, content: string) => ({
+    tag: 'meta',
+    attrs: { property, content },
+    injectTo: 'head' as const,
+  })
+  return {
+    name: 'site-meta',
+    apply: 'build',
+    transformIndexHtml: () => [
+      { tag: 'link', attrs: { rel: 'canonical', href: SITE_URL }, injectTo: 'head' },
+      og('og:title', 'NASA Image of the Day'),
+      og('og:description', SITE_DESCRIPTION),
+      og('og:type', 'website'),
+      og('og:url', SITE_URL),
+      og('og:image', `${SITE_URL}/og-image.png`),
+      og('og:image:width', '1200'),
+      og('og:image:height', '630'),
+    ],
+  }
+}
+
 // defineConfig can take a function: `command` is 'serve' for the dev server
 // and 'build' for production builds (and `vite preview`, which serves them).
-export default defineConfig(({ command }) => ({
-  // GitHub Pages serves this repository's site from /nasa-iod/, so built
-  // asset URLs must start there. The dev server keeps "/". Vite exposes the
-  // value as import.meta.env.BASE_URL, which the router uses as its
-  // basename (src/main.tsx).
-  base: command === 'build' ? '/nasa-iod/' : '/',
+// `mode` is 'production' for `vite build`, or whatever `--mode` names:
+// `npm run build:site` passes `--mode site`.
+export default defineConfig(({ command, mode }) => ({
+  // GitHub Pages serves this repository's site from /nasa-iod/, and
+  // joshuacurry.dev serves its copy from /react/nasa-iod/, so built asset
+  // URLs must start there. The dev server keeps "/". Vite exposes the value
+  // as import.meta.env.BASE_URL, which the router uses as its basename
+  // (src/main.tsx).
+  base: command === 'serve' ? '/' : mode === 'site' ? '/react/nasa-iod/' : '/nasa-iod/',
+  build: { outDir: mode === 'site' ? 'dist-site' : 'dist' },
   plugins: [
     // @vitejs/plugin-react compiles JSX/TSX and enables Fast Refresh: editing
     // a component re-renders it in place, keeping its state.
@@ -81,6 +125,9 @@ export default defineConfig(({ command }) => ({
     // using a Rust port, which is faster but still experimental.
     babel({ presets: [reactCompilerPreset()] }),
 
-    spaFallback(),
+    // GitHub Pages needs the 404.html copy for deep links. joshuacurry.dev
+    // has a server, which answers every path under /react/nasa-iod/ with
+    // index.html itself, and the copy gets the preview tags instead.
+    mode === 'site' ? siteMeta() : spaFallback(),
   ],
 }))

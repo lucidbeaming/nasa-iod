@@ -19,6 +19,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:site": "tsc -b && vite build --mode site",
+    "package:site": "npm run build:site && cd dist-site && zip -qr ../nasa-iod-site-$npm_package_version.zip . && cd .. && shasum -a 256 nasa-iod-site-$npm_package_version.zip > nasa-iod-site-$npm_package_version.zip.sha256",
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "lint": "oxlint",

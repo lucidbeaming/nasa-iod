@@ -2,7 +2,7 @@
 
 An infinite-scrolling feed of NASA's [Astronomy Picture of the Day](https://science.nasa.gov/apod/), built as a **textbook example of current React**. Every file is commented like a tutorial, and the git history is a sequence of chapters you can check out one at a time.
 
-**[Live demo](https://lucidbeaming.github.io/nasa-iod/)** · **[Tutorial](docs/TUTORIAL.md)** · [Conventions](docs/CONVENTIONS.md) · [Stack](docs/STACK.md)
+**[Live demo](https://joshuacurry.dev/react/nasa-iod)** · **[Tutorial](docs/TUTORIAL.md)** · [Conventions](docs/CONVENTIONS.md) · [Stack](docs/STACK.md)
 
 ![The feed on a desktop: today's picture with its title, credit, favorite and explanation buttons, the date stamp, and the header card with the jump-to-date form](docs/img/feed-desktop.jpg)
 
@@ -58,16 +58,17 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
-| Script                            |                                                                              |
-| --------------------------------- | ---------------------------------------------------------------------------- |
-| `npm run dev`                     | dev server with Fast Refresh                                                 |
-| `npm run build`                   | type-check (`tsc -b`) and build to `dist/`                                   |
-| `npm run preview`                 | serve the build locally                                                      |
-| `npm run lint`                    | oxlint                                                                       |
-| `npm run format` / `format:check` | Prettier                                                                     |
-| `npm run deploy`                  | build and publish `dist/` to GitHub Pages (`gh-pages` branch)                |
-| `npm run build:site`              | build the copy served at joshuacurry.dev/react/nasa-iod to `dist-site/`      |
-| `npm run package:site`            | `build:site`, then zip `dist-site/` with a SHA-256 checksum, for the release |
+| Script                            |                                                                                              |
+| --------------------------------- | -------------------------------------------------------------------------------------------- |
+| `npm run dev`                     | dev server with Fast Refresh                                                                 |
+| `npm run build`                   | type-check (`tsc -b`) and build to `dist/`                                                   |
+| `npm run preview`                 | serve the build locally                                                                      |
+| `npm run lint`                    | oxlint                                                                                       |
+| `npm run format` / `format:check` | Prettier                                                                                     |
+| `npm run deploy`                  | build and publish `dist/` to GitHub Pages (`gh-pages` branch)                                |
+| `npm run deploy:redirect`         | publish `pages-redirect/` to GitHub Pages instead: the page that forwards to joshuacurry.dev |
+| `npm run build:site`              | build the copy served at joshuacurry.dev/react/nasa-iod to `dist-site/`                      |
+| `npm run package:site`            | `build:site`, then zip `dist-site/` with a SHA-256 checksum, for the release                 |
 
 `build:site` is the same app with the base path `/react/nasa-iod/`. It skips the GitHub Pages `404.html` copy, since joshuacurry.dev answers deep links itself, and adds a canonical URL and Open Graph tags for link previews (see `vite.config.ts`). Each release attaches its `nasa-iod-site-<version>.zip`, and the site deploys that file, never building the app itself.
 

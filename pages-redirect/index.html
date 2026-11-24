@@ -1,0 +1,32 @@
+<!doctype html>
+<!--
+  The live demo moved from GitHub Pages to joshuacurry.dev. GitHub Pages can't
+  send real redirects, so this page (published as both index.html and
+  404.html by `npm run deploy:redirect`) points search engines at the new URL
+  with a canonical link, and sends visitors there with a meta refresh. The
+  script keeps the path, so an old deep link such as /nasa-iod/day/2026-11-01
+  opens the same day at /react/nasa-iod/day/2026-11-01.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NASA Image of the Day has moved</title>
+    <link rel="canonical" href="https://joshuacurry.dev/react/nasa-iod" />
+    <meta http-equiv="refresh" content="0; url=https://joshuacurry.dev/react/nasa-iod" />
+    <script>
+      location.replace(
+        'https://joshuacurry.dev/react/nasa-iod' +
+          location.pathname.replace(/^\/nasa-iod\/?/, '/').replace(/\/$/, '') +
+          location.search +
+          location.hash,
+      )
+    </script>
+  </head>
+  <body>
+    <p>
+      NASA Image of the Day has moved to
+      <a href="https://joshuacurry.dev/react/nasa-iod">joshuacurry.dev/react/nasa-iod</a>.
+    </p>
+  </body>
+</html>

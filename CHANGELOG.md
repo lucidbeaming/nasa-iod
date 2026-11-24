@@ -4,6 +4,10 @@ All notable changes to this project are documented here. The format follows [Kee
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-11-23
+
+Fixes the blank page at joshuacurry.dev/react/nasa-iod: the router now matches the app folder URL with or without a trailing slash. `nasa-iod-site-1.1.1.zip` is the updated site build.
+
 ### Fixed
 
 - The app no longer stays blank at its folder URL without a trailing slash, such as joshuacurry.dev/react/nasa-iod (#52)
@@ -60,5 +64,6 @@ The textbook rewrite of the 2021 exercise, in 16 chapters. Each is one pull requ
 
 The original coding exercise: tag [`v0-2021`](https://github.com/lucidbeaming/nasa-iod/tree/v0-2021).
 
-[Unreleased]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/lucidbeaming/nasa-iod/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/lucidbeaming/nasa-iod/compare/v1.0.1...v1.1.0

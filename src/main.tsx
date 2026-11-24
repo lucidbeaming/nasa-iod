@@ -68,7 +68,12 @@ createRoot(container).render(
 
           `basename` is the folder the app is served from: "/" in
           development, "/nasa-iod/" on GitHub Pages (chapter 14). Vite
-          exposes it as import.meta.env.BASE_URL.
+          exposes it as import.meta.env.BASE_URL, which always ends in "/".
+          The router is given it without that slash: a basename of
+          "/react/nasa-iod/" doesn't match the bare folder URL
+          "/react/nasa-iod", so the page would stay blank there, while
+          "/react/nasa-iod" matches both. (GitHub Pages redirects the bare
+          URL to the slashed one, which hid this.)
 
           Deep links on static hosting: opening /nasa-iod/day/2026-11-22
           directly asks the server for that file, which doesn't exist. Two
@@ -80,7 +85,7 @@ createRoot(container).render(
               it for unknown paths, the app boots, and the router reads the
               real URL. Clean URLs; the cost is a 404 status on deep links.
           This app uses the second (set up in chapter 14). */}
-      <BrowserRouter basename={import.meta.env.BASE_URL}>
+      <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '') || '/'}>
         <Routes>
           {/* A route with an element but no path is a *layout*: App renders
               the header and an <Outlet/>, and the matching child route
